@@ -74,8 +74,7 @@ extension AlertBody {
             let contentView = ContentView(title: title, image: image)
             contentView.configureLayout(block: { (layout) in
                 layout.isEnabled = true
-                layout.height = 200
-                layout.justifyContent = .spaceBetween
+                layout.justifyContent = .flexStart
                 layout.alignItems = .center
             })
             addSubview(contentView)
@@ -94,7 +93,7 @@ extension AlertBody {
                 layout.height = 50
                 layout.flexDirection = .row
                 layout.justifyContent = .spaceBetween
-                layout.alignItems = .center
+                layout.alignItems = .stretch
             })
 
             addSubview(operationView)
@@ -166,6 +165,7 @@ extension AlertBody {
                 
                 let imageView = UIImageView()
                 imageView.image = image
+                imageView.contentMode = .scaleAspectFit
                 addSubview(imageView)
                 imageView.configureLayout(block: { (layout) in
                     layout.isEnabled = true

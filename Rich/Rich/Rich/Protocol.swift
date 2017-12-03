@@ -187,7 +187,7 @@ extension ExternalAction where Self:Skeleton{
 extension ExternalAction where Self:HUD{
     
     @discardableResult
-    static func show(_ content:HUD.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock?,animation:Animation)->HUD{
+    static func show(_ content:HUD.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil,animation:Animation = .fadedIn)->HUD{
         
         let hud =  HUD(content:content,container:container,yoga:yoga,animation:animation)
         hud.prepare()
@@ -199,7 +199,7 @@ extension ExternalAction where Self:HUD{
 extension ExternalAction where Self:Alert {
     
     @discardableResult
-    static func show(_ content:Alert.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock?,animation:Animation)->Alert{
+    static func show(_ content:Alert.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil ,animation:Animation = .fadedIn)->Alert{
         let alert =  Alert(content:content,container:container,yoga:yoga,animation:animation)
         alert.prepare()
         return alert
@@ -210,7 +210,7 @@ extension ExternalAction where Self:Alert {
 extension ExternalAction where Self:Sheet {
     
     @discardableResult
-    static func show(_ content:Sheet.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock?,animation:Animation)->Sheet{
+    static func show(_ content:Sheet.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil,animation:Animation = .fadedIn)->Sheet{
         let sheet =  Sheet(content:content,container:container,yoga:yoga,animation:animation)
         sheet.prepare()
         return sheet

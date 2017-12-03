@@ -23,23 +23,25 @@ extension MessageViewController{
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        if arc4random_uniform(10) % 2 == 0 {
-           
-            HUD.show( .success(title: ""), inView: view, yoga: nil, animation: .fadedIn)
-            
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-                HUD.hide()
-            }
-
-        }else{
-            
-            Alert.show(.default(title:"测试",subTitle:"测试点什么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点测试点什么?测试点什么?么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点测试点什么?测试点什么?什么?测试点测试点什么?测试点什么?",operation1:"确定",operation2:"取消"), inView: view, yoga: nil, animation: .fadedIn)
-            
+//        if arc4random_uniform(10) % 2 == 0 {
+//
+//            HUD.show( .success(title: ""), inView: view)
+//
 //            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-//                Alert.hide()
+//                HUD.hide()
 //            }
+//
+//        }else{
+        
+            Alert.show(.image(title:"测试图片",image:UIImage(named:"thumb"),operation1:"确定"), inView: view)
+           
+//            Alert.show(.default(title:"测试",subTitle:"测试点什么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点测试点什么?测试点什么?么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点测试点什么?测试点什么?什么?测试点测试点什么?测试点什么?",operation1:"确定",operation2:"取消"), inView: view)
+            
 
-        }
+//        }
+        
+        
+        
     }
 }
 
