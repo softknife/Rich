@@ -48,13 +48,16 @@ extension Alert{
     
     func configBody(){
         
-        let body = AlertBody()
+        guard let container = containerView else {
+            Rich.shared.remove(self)
+            return
+        }
+        let body = AlertBody( content: content)
         body.configureLayout { (layout) in
             layout.isEnabled = true
-
-            layout.width = 300
-//            layout.paddingHorizontal = 20
-            layout.height = 200
+            layout.width = YGValue(container.frame.width - 60)
+            layout.justifyContent = .center
+            layout.alignItems = .stretch
         }
         
         background.addSubview(body)
@@ -87,14 +90,20 @@ extension Alert {
     public struct Content:ContentBindable{
         var type:ContentType
         
-        public static func `default`(title:String? = nil ,subTitle:String? = nil,confirm:String? = nil,cancel:String? = nil)->Content{
-            return Content(type: .default(title:title,subTitle:subTitle,confirm: confirm, cancel: cancel))
+        public static func `default`(title:String? = nil ,subTitle:String? = nil,operation1:String,operation2:String? = nil)->Content{
+            return Content(type: .default(title:title,subTitle:subTitle,operation1: operation1, operation2: operation2))
+        }
+        
+        public static func image(title:String? = nil,image:UIImage? = nil,operation1:String,operation2:String? = nil) ->Content{
+         
+            return Content(type: .image(title: title, image: image, operation1: operation1, operation2: operation2))
         }
     }
     
     internal enum ContentType{
-        case `default`(title:String?,subTitle:String?,confirm:String?,cancel:String?)
-        
+        case `default`(title:String?,subTitle:String?,operation1:String,operation2:String?)
+        case image(title:String?,image:UIImage?,operation1:String,operation2:String?)
+
     }
 }
 

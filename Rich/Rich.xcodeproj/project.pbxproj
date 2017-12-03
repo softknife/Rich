@@ -28,6 +28,7 @@
 		91CBABF31FD19F320010F17A /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CBABE71FD19F320010F17A /* Enum.swift */; };
 		91CBABF41FD19F320010F17A /* CocoaLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CBABE81FD19F320010F17A /* CocoaLayout.swift */; };
 		91CBABF71FD19F3D0010F17A /* SingleLabelCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CBABF61FD19F3D0010F17A /* SingleLabelCollectionCell.swift */; };
+		91CBABF91FD29E210010F17A /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CBABF81FD29E210010F17A /* Button.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		91CBABE71FD19F320010F17A /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		91CBABE81FD19F320010F17A /* CocoaLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CocoaLayout.swift; sourceTree = "<group>"; };
 		91CBABF61FD19F3D0010F17A /* SingleLabelCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLabelCollectionCell.swift; sourceTree = "<group>"; };
+		91CBABF81FD29E210010F17A /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		EE8429DD04F97FECF395E2AD /* Pods-Rich.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rich.release.xcconfig"; path = "Pods/Target Support Files/Pods-Rich/Pods-Rich.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +124,7 @@
 				91CBABE01FD19F320010F17A /* SheetBody.swift */,
 				91CBABE11FD19F320010F17A /* Background.swift */,
 				91CBABE21FD19F320010F17A /* AlertBody.swift */,
+				91CBABF81FD29E210010F17A /* Button.swift */,
 				91CBABE31FD19F320010F17A /* Eraser.swift */,
 				91CBABE41FD19F320010F17A /* HUD.swift */,
 				91CBABE51FD19F320010F17A /* HUDBody.swift */,
@@ -294,6 +297,7 @@
 				91CBABDB1FD19F250010F17A /* BasicViewController.swift in Sources */,
 				91CBABD81FD19F250010F17A /* ExamplesViewController.swift in Sources */,
 				91CBABF41FD19F320010F17A /* CocoaLayout.swift in Sources */,
+				91CBABF91FD29E210010F17A /* Button.swift in Sources */,
 				91CBABEC1FD19F320010F17A /* SheetBody.swift in Sources */,
 				91CBABEB1FD19F320010F17A /* Protocol.swift in Sources */,
 				91CBABE91FD19F320010F17A /* Sheet.swift in Sources */,
