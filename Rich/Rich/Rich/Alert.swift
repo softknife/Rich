@@ -28,6 +28,7 @@ public class Alert:Skeleton,ExternalAction{
     required public init(content:Content, container:UIView,yoga:YGLayoutConfigurationBlock?,animation:Animation){
         
         self.content = content
+
         self.containerView = container
         self.animation = animation
         
@@ -40,6 +41,14 @@ public class Alert:Skeleton,ExternalAction{
         
         self.background = Background(color: .clear, layout: customLayout)
         
+        
+        switch content.type {
+        case let .default(_,_, ops):
+            setDefaultOperation(ops: ops)
+        case let .image(_, _, ops):
+            setDefaultOperation(ops: ops)
+        }
+
     }
     
 }
@@ -52,7 +61,11 @@ extension Alert{
             Rich.shared.remove(self)
             return
         }
+        
+      
+        
         let body = AlertBody( content: content)
+        
         body.configureLayout { (layout) in
             layout.isEnabled = true
             layout.width = YGValue(container.frame.width - 60)
@@ -63,6 +76,21 @@ extension Alert{
         background.addSubview(body)
         
     }
+    
+    private func setDefaultOperation(ops:[Operation]){
+        
+        for op in ops {
+            if op.action == nil {
+                op.action =  { [weak self] in
+                    guard let weakSelf = self else {return}
+                    Rich.shared.remove(weakSelf)
+                    weakSelf.turnToHide()
+                }
+            }
+        }
+
+    }
+    
     func refreshBody(){
         
     }
@@ -90,19 +118,21 @@ extension Alert {
     public struct Content:ContentBindable{
         var type:ContentType
         
-        public static func `default`(title:String? = nil ,subTitle:String? = nil,operation1:String,operation2:String? = nil)->Content{
-            return Content(type: .default(title:title,subTitle:subTitle,operation1: operation1, operation2: operation2))
+        public static func `default`(title:Description? = nil ,subTitle:Description? = nil,operations:[Operation])->Content{
+            return Content(type: .default(title:title,subTitle:subTitle,operations:operations))
         }
         
-        public static func image(title:String? = nil,image:UIImage? = nil,operation1:String,operation2:String? = nil) ->Content{
-         
-            return Content(type: .image(title: title, image: image, operation1: operation1, operation2: operation2))
+        public static func image(title:Description? = nil,image:Image? = nil,operations:[Operation])  ->Content{
+            
+            return Content(type: .image(title: title, image: image, operations:operations))
         }
     }
     
+    
+    
     internal enum ContentType{
-        case `default`(title:String?,subTitle:String?,operation1:String,operation2:String?)
-        case image(title:String?,image:UIImage?,operation1:String,operation2:String?)
+        case `default`(title:Description?,subTitle:Description?,operations:[Operation])
+        case image(title:Description?,image:Image?,operations:[Operation])
 
     }
 }

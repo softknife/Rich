@@ -13,14 +13,23 @@ internal class Button : UIButton {
     var click : ((Button)->())?
     
     
-    internal init(content:String,color:UIColor = .gray,font:UIFont = .systemFont(ofSize: 16) ,backgroundColor:UIColor = .clear) {
+    internal init(content:Operation,color:UIColor = .gray,font:UIFont = .systemFont(ofSize: 16)) {
         super.init(frame:.zero)
 
-        setTitle(content, for: .normal)
-        setTitleColor(color, for: .normal)
-        titleLabel?.font = font
+        
+        switch content.value {
+        case .image(let image):
+            setImage(image, for: .normal)
+        case .text(let text):
+            setTitle(text, for: .normal)
+            setTitleColor(color, for: .normal)
+            titleLabel?.font = font
+            titleLabel?.textAlignment = .center
 
-        self.backgroundColor = backgroundColor
+        }
+        
+
+        self.backgroundColor = content.backgroundColor
         
         addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
     }
@@ -33,10 +42,7 @@ internal class Button : UIButton {
 extension Button{
     
     @objc private func buttonClick(){
-        guard let callback = click else {
-            return
-        }
-        callback(self)
+        click?(self)
         
     }
 }

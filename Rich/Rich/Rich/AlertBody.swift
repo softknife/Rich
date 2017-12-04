@@ -37,40 +37,23 @@ extension AlertBody {
         
         
         switch content.type {
-        case let .default(title, subTitle, operation1, operation2):
+        case let .default(title, subTitle, ops):
             
-            
+            // upper contentView
             let contentView = ContentView(title: title, subTitle: subTitle)
             contentView.configureLayout(block: { (layout) in
                 layout.isEnabled = true
                 layout.justifyContent = .flexStart
                 layout.alignItems = .center
-                
-
             })
             addSubview(contentView)
             
+            // operation view
+            configOperationView(ops)
+
+        case let .image(title, image, ops):
             
-            
-            var ops = [String]()
-            ops.append(operation1)
-            if let op2 = operation2 {
-                ops.append(op2)
-            }
-            let operationView = OperationView(ops: ops)
-            operationView.configureLayout(block: { (layout) in
-                layout.isEnabled = true
-                layout.height = 50
-                layout.flexDirection = .row
-                layout.justifyContent = .spaceBetween
-                layout.alignItems = .stretch
-            })
-            
-            addSubview(operationView)
-            
-            
-        case let .image(title, image, operation1, operation2):
-            
+            // upper contentView
             let contentView = ContentView(title: title, image: image)
             contentView.configureLayout(block: { (layout) in
                 layout.isEnabled = true
@@ -80,25 +63,35 @@ extension AlertBody {
             addSubview(contentView)
             
             
-            
-            
-            var ops = [String]()
-            ops.append(operation1)
-            if let op2 = operation2 {
-                ops.append(op2)
-            }
-            let operationView = OperationView(ops: ops)
-            operationView.configureLayout(block: { (layout) in
-                layout.isEnabled = true
-                layout.height = 50
-                layout.flexDirection = .row
-                layout.justifyContent = .spaceBetween
-                layout.alignItems = .stretch
-            })
-
-            addSubview(operationView)
-
+            // operation view
+            configOperationView(ops)
         }
+    }
+    
+    private func configOperationView(_ ops:[Operation]){
+     
+        // seperateLine
+        let seperate = UIView()
+        seperate.backgroundColor = UIColor.lightGray
+        addSubview(seperate)
+        seperate.configureLayout(block: { (layout) in
+            layout.isEnabled = true
+            layout.height = 0.5
+        })
+        
+        
+        // lower operation View
+        let operationView = OperationView(ops: ops)
+        operationView.configureLayout(block: { (layout) in
+            layout.isEnabled = true
+            layout.height = 50
+            layout.flexDirection = .row
+            layout.justifyContent = .spaceBetween
+            layout.alignItems = .stretch
+            
+        })
+        addSubview(operationView)
+
     }
 }
 
@@ -109,28 +102,19 @@ extension AlertBody {
 extension AlertBody {
     
     class ContentView:UIView {
-        init(title:String?,subTitle:String?) {
+        init(title:Description?,subTitle:Description?) {
             super.init(frame: .zero)
             
-            backgroundColor = .green
+//            backgroundColor = .green
             
-            if let title = title {
-                let titleLabel = UILabel()
-                titleLabel.backgroundColor = .purple
-                titleLabel.text = title
-                addSubview(titleLabel)
-                titleLabel.configureLayout(block: { (layout) in
-                    layout.isEnabled = true
-                    layout.marginTop = 5
-                })
-            }
+            configTitle(title)
 
             if let sub = subTitle {
                 
                 let titleLabel = UILabel()
-                titleLabel.backgroundColor = .yellow
+                titleLabel.backgroundColor = sub.backgroundColor
                 titleLabel.numberOfLines = 0
-                titleLabel.text = sub
+                titleLabel.text = sub.value
                 addSubview(titleLabel)
                 titleLabel.configureLayout(block: { (layout) in
                     layout.isEnabled = true
@@ -148,24 +132,17 @@ extension AlertBody {
             
         }
         
-        init(title:String?,image:UIImage?) {
+        init(title:Description?,image:Image?) {
             super.init(frame: .zero)
             
-            if let title = title {
-                let titleLabel = UILabel()
-                titleLabel.text = title
-                addSubview(titleLabel)
-                titleLabel.configureLayout(block: { (layout) in
-                    layout.isEnabled = true
-                    layout.marginTop = 5
-                })
-            }
+            configTitle(title)
             
             if let image = image {
                 
                 let imageView = UIImageView()
-                imageView.image = image
-                imageView.contentMode = .scaleAspectFit
+                imageView.image = image.value
+                imageView.backgroundColor = image.backgroundColor
+                imageView.contentMode = image.contentMode
                 addSubview(imageView)
                 imageView.configureLayout(block: { (layout) in
                     layout.isEnabled = true
@@ -180,6 +157,19 @@ extension AlertBody {
 
         }
 
+        private func configTitle(_ title:Description?){
+            
+            if let title = title {
+                let titleLabel = UILabel()
+                titleLabel.text = title.value
+                titleLabel.backgroundColor = title.backgroundColor
+                addSubview(titleLabel)
+                titleLabel.configureLayout(block: { (layout) in
+                    layout.isEnabled = true
+                    layout.marginTop = 5
+                })
+            }
+        }
         
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
@@ -192,7 +182,7 @@ extension AlertBody {
 extension AlertBody {
     class OperationView: UIView {
         
-        init(ops:[String]) {
+        init(ops:[Operation]) {
             super.init(frame: .zero)
             
 
@@ -201,7 +191,7 @@ extension AlertBody {
                 if index > 0 {
                     
                     let separete = UIView()
-                    separete.backgroundColor = .lightGray
+//                    separete.backgroundColor = .lightGray
                     addSubview(separete)
                     separete.configureLayout(block: { (layout) in
                         layout.isEnabled = true
@@ -212,9 +202,10 @@ extension AlertBody {
                 }
                 
                 let opButton = Button(content: op)
-                opButton.backgroundColor = .orange
-                opButton.titleLabel?.textAlignment = .center
-                opButton.setTitle(op, for: .normal)
+                opButton.click = {button in
+                    op.action?()
+                }
+//                opButton.backgroundColor = .orange
                 addSubview(opButton)
                 opButton.configureLayout(block: { (layout) in
                     layout.isEnabled = true

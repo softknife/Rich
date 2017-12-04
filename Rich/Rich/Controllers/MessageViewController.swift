@@ -33,7 +33,8 @@ extension MessageViewController{
 //
 //        }else{
         
-            Alert.show(.image(title:"测试图片",image:UIImage(named:"thumb"),operation1:"确定"), inView: view)
+        
+        Alert.show(.image(title:"测试图片",image:Image(named:"thumb"),operations:["确定"]), inView: view)
            
 //            Alert.show(.default(title:"测试",subTitle:"测试点什么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点测试点什么?测试点什么?么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点测试点什么?测试点什么?什么?测试点测试点什么?测试点什么?",operation1:"确定",operation2:"取消"), inView: view)
             
