@@ -20,14 +20,17 @@ public class Operation: ExpressibleByStringLiteral{
     
     let value:Value
     var textColor : UIColor = .gray
+    var font : UIFont = .systemFont(ofSize: 16)
     var backgroundColor:UIColor = .clear
     var action : Action? = nil
     
-    public init(value:Value,textColor:UIColor = .gray,backgroundColor:UIColor = .clear , action:Action? = nil) {
+    public init(value:Value,textColor:UIColor = .gray,font:UIFont = .systemFont(ofSize: 16),backgroundColor:UIColor = .clear , action:Action? = nil) {
         self.value = value
         self.textColor = textColor
+        self.font = font
         self.backgroundColor = backgroundColor
         self.action = action
+        
     }
     
     
@@ -43,12 +46,16 @@ public struct Description:ExpressibleByStringLiteral{
     
     let value:String
     var textColor : UIColor = .gray
+    var font : UIFont = .systemFont(ofSize: 17)
     var backgroundColor:UIColor = .clear
+    var numberOfLines : Int = 1
 
-    public init(value:String,textColor:UIColor = .gray , backgroundColor:UIColor = .clear){
+    public init(value:String,textColor:UIColor = .gray ,font:UIFont = .systemFont(ofSize: 17), backgroundColor:UIColor = .clear,numberOfLines:Int = 1){
         self.value = value
         self.textColor = textColor
         self.backgroundColor = backgroundColor
+        self.font = font
+        self.numberOfLines = numberOfLines
     }
     
     public init(stringLiteral value: String) {

@@ -71,14 +71,8 @@ extension AlertBody {
     private func configOperationView(_ ops:[Operation]){
      
         // seperateLine
-        let seperate = UIView()
-        seperate.backgroundColor = UIColor.lightGray
+        let seperate = SeperateLine()
         addSubview(seperate)
-        seperate.configureLayout(block: { (layout) in
-            layout.isEnabled = true
-            layout.height = 0.5
-        })
-        
         
         // lower operation View
         let operationView = OperationView(ops: ops)
@@ -111,10 +105,7 @@ extension AlertBody {
 
             if let sub = subTitle {
                 
-                let titleLabel = UILabel()
-                titleLabel.backgroundColor = sub.backgroundColor
-                titleLabel.numberOfLines = 0
-                titleLabel.text = sub.value
+                let titleLabel = TextLabel(content: sub)
                 addSubview(titleLabel)
                 titleLabel.configureLayout(block: { (layout) in
                     layout.isEnabled = true
@@ -122,7 +113,6 @@ extension AlertBody {
                     layout.marginBottom = 10
                     
                     layout.flexGrow = 1
-                    
                     layout.maxHeight = 100
                     layout.minHeight = 80
 
@@ -139,10 +129,7 @@ extension AlertBody {
             
             if let image = image {
                 
-                let imageView = UIImageView()
-                imageView.image = image.value
-                imageView.backgroundColor = image.backgroundColor
-                imageView.contentMode = image.contentMode
+                let imageView = ImageView(content: image)
                 addSubview(imageView)
                 imageView.configureLayout(block: { (layout) in
                     layout.isEnabled = true
@@ -160,9 +147,7 @@ extension AlertBody {
         private func configTitle(_ title:Description?){
             
             if let title = title {
-                let titleLabel = UILabel()
-                titleLabel.text = title.value
-                titleLabel.backgroundColor = title.backgroundColor
+                let titleLabel = TextLabel(content:title)
                 addSubview(titleLabel)
                 titleLabel.configureLayout(block: { (layout) in
                     layout.isEnabled = true

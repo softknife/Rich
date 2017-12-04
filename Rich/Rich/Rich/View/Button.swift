@@ -13,7 +13,7 @@ internal class Button : UIButton {
     var click : ((Button)->())?
     
     
-    internal init(content:Operation,color:UIColor = .gray,font:UIFont = .systemFont(ofSize: 16)) {
+    internal init(content:Operation) {
         super.init(frame:.zero)
 
         
@@ -22,14 +22,14 @@ internal class Button : UIButton {
             setImage(image, for: .normal)
         case .text(let text):
             setTitle(text, for: .normal)
-            setTitleColor(color, for: .normal)
-            titleLabel?.font = font
+            setTitleColor(content.textColor, for: .normal)
+            titleLabel?.font = content.font
             titleLabel?.textAlignment = .center
 
         }
         
 
-        self.backgroundColor = content.backgroundColor
+        backgroundColor = content.backgroundColor
         
         addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
     }

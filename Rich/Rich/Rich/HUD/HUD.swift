@@ -52,11 +52,17 @@ extension HUD{
     
     
     func configBody(){
-        let body = HUDBody()
+        let body = HUDBody(content:content)
         body.configureLayout { (layout) in
             layout.isEnabled = true
+            layout.width = 150
+//            layout.aspectRatio = 1
+            layout.justifyContent = .center
+            layout.alignItems = .center
         }
 
+        body.backgroundColor = .orange
+        
         background.addSubview(body)
     }
 
@@ -65,6 +71,7 @@ extension HUD{
         containerView?.subviews.forEach{$0.removeFromSuperview()}
         
         configBody()
+        
         
         if state == .awake(time: .first) || state == .awake(time: .again){
             containerView?.addSubview(background)
@@ -113,20 +120,20 @@ extension HUD {
             return Content(type: .systemActivity)
         }
         
-        static func success(title:String? = nil ,subtitle:String? = nil)->Content{
-            return Content(type: .success(title: title, subtitle: subtitle))
+        static func success(description:Description? = nil)->Content{
+            return Content(type: .success(description: description))
         }
         
-        static func failure(title:String? = nil ,subtitle:String? = nil )->Content{
-            return Content(type: .failure(title: title, subtitle: subtitle))
+        static func failure(description:Description? = nil )->Content{
+            return Content(type: .failure(description: description))
         }
         
-        static func attributes1(title:String? = nil ,subtitle:String? = nil ,image:UIImage? = nil )->Content{
-            return Content(type: .attributes1(title: title, subtitle: subtitle, image: image))
+        static func titleThenImage(title:Description? = nil , image:Image? = nil )->Content{
+            return Content(type: .titleThenImage(title: title, image: image))
         }
         
-        static func attributes2(image:UIImage? = nil ,name:String? = nil ,detail:String? = nil )->Content{
-            return Content(type: .attributes2(image: image, name: name, detail: detail))
+        static func imageThenName(image:Image? = nil ,name:Description? = nil )->Content{
+            return Content(type: .imageThenName(image: image, name: name))
         }
         
         static func progress(_ type:ProgressType)->Content{
@@ -144,20 +151,14 @@ extension HUD {
     
     internal enum ContentType  {
         
-        
         case systemActivity
+        case success(description:Description?)
+        case failure(description:Description?)
         
-        
-        case success(title:String?,subtitle:String?)
-        case failure(title:String?,subtitle:String?)
-        
-        
-        case attributes1(title:String?,subtitle:String?,image:UIImage?)
-        case attributes2(image:UIImage?,name:String?,detail:String?)
+        case titleThenImage(title:Description?,image:Image?)
+        case imageThenName(image:Image?,name:Description?)
         
         case progress(ProgressType)
-        
-        
     }
 }
 
