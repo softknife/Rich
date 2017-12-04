@@ -39,8 +39,10 @@ extension HUDBody {
             addSubview(activity)
             activity.configureLayout(block: { (layout) in
                 layout.isEnabled = true
+                layout.alignSelf = .stretch
+                layout.aspectRatio = 1
             })
-            
+            activity.startAnimating()
             
         case let .success(title):
             
@@ -58,7 +60,7 @@ extension HUDBody {
             
         case let .progress(progress):
             
-            let progressView = ProgressView()
+            let progressView = ProgressView(content:progress)
             addSubview(progressView)
             progressView.configureLayout(block: { (layout) in
                 layout.isEnabled =  true

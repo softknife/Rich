@@ -25,7 +25,8 @@ extension MessageViewController{
         
 //        if arc4random_uniform(10) % 2 == 0 {
 //
-            HUD.show( .success(description: "成功"), inView: view)
+//            HUD.show( .success(description: "成功"), inView: view)
+        HUD.show( .systemActivity, inView: view)
 
 //            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
 //                HUD.hide()

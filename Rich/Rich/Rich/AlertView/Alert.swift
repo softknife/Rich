@@ -91,9 +91,6 @@ extension Alert{
 
     }
     
-    func refreshBody(){
-        
-    }
     
     func turnToShow(time:State.Repeat){
         
@@ -123,7 +120,6 @@ extension Alert {
         }
         
         public static func image(title:Description? = nil,image:Image? = nil,operations:[Operation])  ->Content{
-            
             return Content(type: .image(title: title, image: image, operations:operations))
         }
     }

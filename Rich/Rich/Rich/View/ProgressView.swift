@@ -12,8 +12,8 @@ class  ProgressView: UIView {
     
     let progress : HUD.ProgressType
     
-    init(progress:HUD.ProgressType) {
-        self.progress = progress
+    init(content:HUD.ProgressType) {
+        self.progress = content
         super.init(frame: .zero)
     }
     

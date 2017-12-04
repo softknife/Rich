@@ -47,10 +47,27 @@ extension Sheet{
     
     func configBody(){
         
-    }
-    func refreshBody(){
+        guard let container = containerView else {
+            Rich.shared.remove(self)
+            return
+        }
+        
+        
+        
+        let body = SheetBody(content: content)
+        
+        body.configureLayout { (layout) in
+            layout.isEnabled = true
+            layout.width = YGValue(container.frame.width - 60)
+            layout.justifyContent = .center
+            layout.alignItems = .stretch
+        }
+        
+        background.addSubview(body)
+
         
     }
+ 
     
     func turnToShow(time:State.Repeat){
         
@@ -68,10 +85,14 @@ extension Sheet {
         
         var type:ContentType
         
+        public static func system(items:[Operation],others:[(CGFloat,Operation)]? = nil) ->Content {
+            return Content(type: .system(items: items, others: others))
+        }
+        
     }
     
     internal enum ContentType{
-        
+        case system(items:[Operation],others:[(CGFloat,Operation)]?)
     }
 }
 

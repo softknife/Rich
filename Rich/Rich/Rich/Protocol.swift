@@ -48,6 +48,8 @@ extension DistinguishAction where Self:CommonConfigure{
     func goToSleep(){
         background.removeFromSuperview()
     }
+    
+    func refreshBody(){}
 }
 
 
