@@ -10,5 +10,16 @@ import UIKit
 
 class  ProgressView: UIView {
     
-
+    let progress : HUD.ProgressType
+    
+    init(progress:HUD.ProgressType) {
+        self.progress = progress
+        super.init(frame: .zero)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
 }

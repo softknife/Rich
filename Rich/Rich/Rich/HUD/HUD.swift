@@ -69,7 +69,6 @@ extension HUD{
     func refreshBody(){
      
         containerView?.subviews.forEach{$0.removeFromSuperview()}
-        
         configBody()
         
         
@@ -143,9 +142,9 @@ extension HUD {
 
     
     public enum ProgressType{
-        case `default`
-        case textInCircle
-        case pie
+        case `default`(Progress)
+        case textInCircle(Progress)
+        case pie(Progress)
     }
     
     

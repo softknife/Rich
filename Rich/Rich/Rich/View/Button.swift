@@ -16,7 +16,6 @@ internal class Button : UIButton {
     internal init(content:Operation) {
         super.init(frame:.zero)
 
-        
         switch content.value {
         case .image(let image):
             setImage(image, for: .normal)
@@ -25,12 +24,9 @@ internal class Button : UIButton {
             setTitleColor(content.textColor, for: .normal)
             titleLabel?.font = content.font
             titleLabel?.textAlignment = .center
-
         }
         
-
         backgroundColor = content.backgroundColor
-        
         addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
     }
     
@@ -43,7 +39,6 @@ extension Button{
     
     @objc private func buttonClick(){
         click?(self)
-        
     }
 }
 
