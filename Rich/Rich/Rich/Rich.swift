@@ -21,7 +21,7 @@ internal class Rich {
         runloop()
     }
     
-    
+    private var timer:Timer?
 }
 
 
@@ -33,6 +33,11 @@ extension Rich{
     
     internal static func add(_ node:Node){
         Rich.shared.nodes.append(node)
+        
+        guard let _ = Rich.shared.timer else {
+            Rich.shared.runloop()
+            return
+        }
     }
     
     internal static func remove(_ node:Node){
@@ -74,15 +79,23 @@ extension Rich{
     
     private func runloop(){
         
-        DispatchQueue.global().async {
+         DispatchQueue.global().async {
             
             let timer = Timer(timeInterval: 2, target: self, selector: .removeInvalidNode, userInfo: nil, repeats: true)
             timer.fire()
             
-            RunLoop.current.add(timer, forMode: .commonModes)
-            RunLoop.current.run()
+//            RunLoop.current.add(timer, forMode: .commonModes)
+//
+//            RunLoop.current.run()
+            self.timer = timer
             
         }
+        
+        /*
+         Manually removing all known input sources and timers from the run loop is not a guarantee that the run loop will exit. OS X can install and remove additional input sources as needed to process requests targeted at the receiver’s thread. Those sources could therefore prevent the run loop from exiting.
+         
+         If you want the run loop to terminate, you shouldn't use this method. Instead, use one of the other run methods and also check other arbitrary conditions of your own, in a loop.
+         */
         
     }
     
@@ -90,9 +103,15 @@ extension Rich{
         
         print("RunLoop something")
         
-        nodes = nodes.filter{ $0.containerView != nil }
+//        if nodes.isEmpty {
+//            timer?.invalidate()
+//            timer = nil
+//        }
+//
+//        while let timer =  self.timer, timer.isValid && RunLoop.current.run(mode: .defaultRunLoopMode, before: Date(timeIntervalSinceNow: 0.1)) {
+//            nodes = nodes.filter{ $0.containerView != nil }
+//        }
       
-
     }
 }
 
