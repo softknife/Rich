@@ -64,6 +64,9 @@ extension HUD{
         body.backgroundColor = .orange
         
         background.addSubview(body)
+        
+        background.body = body
+
     }
 
     func refreshBody(){

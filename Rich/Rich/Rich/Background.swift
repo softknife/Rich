@@ -9,9 +9,14 @@
 import UIKit
 import YogaKit
 
+
 class Background:UIView {
     
     //    fileprivate var viewType : ViewType
+//    var contentView : BodyConfigure?
+    
+    
+    
     
     init(color:UIColor = .clear , layout:InitialLayout) {
         
@@ -55,7 +60,15 @@ class Background:UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+ 
+    var body:UIView?
+//
+//    func holdBody<T:UIView>(_ body:T) where T : BodyConfigure  {
+//        self.body = body
+//    }
+//    func getBody<T:BodyConfigure>() -> T {
+//        return self.body as! T
+//    }
 }
 
 

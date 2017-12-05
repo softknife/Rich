@@ -74,6 +74,7 @@ extension Alert{
         }
         
         background.addSubview(body)
+        background.body = body
         
     }
     

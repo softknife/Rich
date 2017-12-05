@@ -9,9 +9,11 @@
 import UIKit
 import YogaKit
 
-class SheetBody: UIView {
+class SheetBody: UIView , BodyConfigure{
     
-    let content : Sheet.Content
+    typealias T = Sheet
+    var content : T.Content
+    
     init(content:Sheet.Content) {
         self.content = content
         super.init(frame: .zero)
@@ -54,6 +56,9 @@ extension SheetBody {
             }
             
             let button = Button(content: item)
+            button.click = {btn in
+                item.action?()
+            }
             addSubview(button)
             button.configureLayout(block: { (layout) in
                 layout.isEnabled = true
@@ -73,7 +78,9 @@ extension SheetBody {
             }
             
             let button = Button(content: item.1.1)
-            
+            button.click = {btn in
+                item.1.1.action?()
+            }
             addSubview(button)
             button.configureLayout(block: { (layout) in
                 layout.isEnabled = true

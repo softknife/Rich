@@ -58,8 +58,6 @@ extension Sheet{
             return
         }
         
-        
-        
         let body = SheetBody(content: content)
         
         body.configureLayout { (layout) in
@@ -72,7 +70,7 @@ extension Sheet{
         
         background.addSubview(body)
 
-        
+        background.body = body
     }
  
     
@@ -86,16 +84,16 @@ extension Sheet{
         container.addSubview(background)
         background.yoga.applyLayout(preservingOrigin: true)
         
-        background.subviews.first!.transform = CGAffineTransform(translationX: 0, y: background.subviews.first!.bounds.height)
+        background.body!.transform = CGAffineTransform(translationX: 0, y: background.body!.bounds.height)
         UIView.animate(withDuration: 1, animations: {
-            self.background.subviews.first!.transform = CGAffineTransform.identity
+            self.background.body!.transform = CGAffineTransform.identity
         })
     }
     
     func turnToHide(){
         
         UIView.animate(withDuration: 1, animations: {
-            self.background.alpha = 0
+            self.background.body!.transform = CGAffineTransform(translationX: 0, y: self.background.body!.bounds.height)
         }) { (finished) in
             self.background.removeFromSuperview()
         }

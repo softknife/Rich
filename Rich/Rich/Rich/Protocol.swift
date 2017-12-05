@@ -9,7 +9,19 @@
 import UIKit
 import YogaKit
 
+
+///////////////////////////////////////////////////////////////////////////////////////////
+// HUD,AlertView & ActionSheet Configuration Protocol
+///////////////////////////////////////////////////////////////////////////////////////////
 typealias Skeleton = CommonConfigure & DistinguishAction & CommonAction
+
+
+protocol ContentBindable {
+    associatedtype ContentType
+    var type : ContentType{get set}
+    
+}
+
 
 protocol BaseConfigure:class  {
     
@@ -28,8 +40,6 @@ protocol CommonConfigure:BaseConfigure{
     init(content:Content, container:UIView,yoga:YGLayoutConfigurationBlock?,animation:Animation)
     
 }
-
-
 
 
 protocol DistinguishAction {
@@ -150,15 +160,25 @@ extension CommonAction where Self:BaseConfigure & DistinguishAction{
   
 }
 
-
-protocol ContentBindable {
-    associatedtype ContentType
-    var type : ContentType{get set}
+//////////////////////////////////////////////////////////////////////////////////////////
+// Body Configuration protocol
+//////////////////////////////////////////////////////////////////////////////////////////
+protocol BodyConfigure  {
+    
+    associatedtype T : CommonConfigure
+    
+    var content : T.Content {get set}
     
 }
 
-
-
+////////////////////////////////////////////////////////////////////////////////////////////
+//// Background Configuration protocol
+////////////////////////////////////////////////////////////////////////////////////////////
+//protocol BackgroundConfigure {
+//    associatedtype T : UIView where Self:BodyConfigure
+//    var contentView : T? {get set}
+//    
+//}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Expose to Users directly
@@ -167,7 +187,6 @@ protocol ExternalAction{
     
     func hide()
     static func hide()
-
 }
 
 extension ExternalAction where Self:Skeleton{

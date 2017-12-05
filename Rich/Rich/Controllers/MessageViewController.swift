@@ -37,9 +37,12 @@ extension MessageViewController{
         let others = [
         (CGFloat(10),Operation(value: .text("确定"), textColor: .gray, backgroundColor: UIColor(white: 1, alpha: 0.7), action: {
             print("确定")
+            Sheet.hide()
         })),
         (CGFloat(10),Operation(value: .text("取消"), textColor: .gray, backgroundColor: UIColor(white: 1, alpha: 0.7), action: {
             print("取消")
+            Sheet.hide()
+
         }))]
     
         

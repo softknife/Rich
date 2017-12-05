@@ -9,9 +9,10 @@
 import UIKit
 import YogaKit
 
-class AlertBody: UIView {
- 
-    let content : Alert.Content
+class AlertBody: UIView , BodyConfigure{
+    
+    typealias T = Alert
+    var content : T.Content
     
     init(color: UIColor = UIColor(white: 1.0, alpha: 0.8) , content:Alert.Content) {
         

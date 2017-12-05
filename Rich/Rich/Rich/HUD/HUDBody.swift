@@ -9,9 +9,11 @@
 import UIKit
 import YogaKit
 
-class HUDBody: UIView {
+class HUDBody: UIView , BodyConfigure{
     
-    let content : HUD.Content
+    typealias T = HUD
+    var content : T.Content
+    
     init(content:HUD.Content) {
         self.content = content
         super.init(frame: .zero)
