@@ -15,7 +15,7 @@ internal class Rich {
     
     internal static let shared = Rich()
     
-    internal var nodes = [Node]()
+    private var nodes = [Node]()
     
     private init(){
         runloop()
@@ -27,28 +27,36 @@ internal class Rich {
 
 extension Rich{
     
-    internal func remove(_ node:Node){
-        nodes = nodes.filter{ $0 !== node }
+    internal static func getNodes()->[Node]{
+        return Rich.shared.nodes
     }
     
-    internal func containNode(type:RichType)->Bool{
-        return !(nodes(type: type).isEmpty)
+    internal static func add(_ node:Node){
+        Rich.shared.nodes.append(node)
     }
     
-    internal func nodes(type:RichType) -> [Node]{
-        return nodes.filter{$0.type == type}
+    internal static func remove(_ node:Node){
+       Rich.shared.nodes = Rich.shared.nodes.filter{ $0 !== node }
     }
     
-    internal func activeNodeType()->RichType?{
+    internal static func containNode(type:RichType)->Bool{
+        return !(getNodes(type: type).isEmpty)
+    }
+    
+    internal static func  getNodes(type:RichType) -> [Node]{
+        return Rich.shared.nodes.filter{$0.type == type}
+    }
+    
+    internal static func activeNodeType()->RichType?{
         return activeNode()?.type
     }
     
-    internal func activeNode()->Node?{
-        return nodes.filter{($0.state == .awake(time:.first)) || ($0.state == .awake(time:.again))}.first
+    internal static func activeNode()->Node?{
+        return Rich.shared.nodes.filter{($0.state == .awake(time:.first)) || ($0.state == .awake(time:.again))}.first
     }
     
-    internal func nextWillShow(from base:Node) ->Node?{
-        let index = nodes.index { (node) -> Bool in
+    internal static func nextWillShow(from base:Node) ->Node?{
+        let index = Rich.shared.nodes.index { (node) -> Bool in
             return node === base
         }
         
@@ -61,7 +69,7 @@ extension Rich{
             return nil
         }
         
-        return nodes[previous]
+        return Rich.shared.nodes[previous]
     }
     
     private func runloop(){
@@ -82,11 +90,9 @@ extension Rich{
         
         print("RunLoop something")
         
-        for (i,node) in nodes.enumerated() {
-            if node.containerView == nil {
-                nodes.remove(at: i)
-            }
-        }
+        nodes = nodes.filter{ $0.containerView != nil }
+      
+
     }
 }
 

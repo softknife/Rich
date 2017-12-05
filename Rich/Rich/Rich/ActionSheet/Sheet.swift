@@ -54,7 +54,7 @@ extension Sheet{
     func configBody(){
         
         guard let container = containerView else {
-            Rich.shared.remove(self)
+            Rich.remove(self)
             return
         }
         
@@ -77,7 +77,7 @@ extension Sheet{
     func turnToShow(time:State.Repeat){
         
         guard let container = containerView else {
-            Rich.shared.remove(self)
+            Rich.remove(self)
             return
         }
         
@@ -109,14 +109,32 @@ extension Sheet {
         
         var type:ContentType
         
-        public static func system(items:[Operation],others:[(CGFloat,Operation)]? = nil) ->Content {
+        public static func system(items:[Operation],others:[MO]? = nil) ->Content {
             return Content(type: .system(items: items, others: others))
         }
         
     }
     
-    internal enum ContentType{
-        case system(items:[Operation],others:[(CGFloat,Operation)]?)
+    final public class MO:ExpressibleByStringLiteral,AdditionalConfiguration {
+        
+        var operation : Operation = ""
+        var margin : UIEdgeInsets = .zero
+        
+        init() { }
+        
+        public init(stringLiteral value: String) {
+            operation = Operation(stringLiteral: value)
+            operation.backgroundColor = UIColor(white:1.0,alpha:0.7)
+        }
+        
     }
+    
+    
+    
+    internal enum ContentType{
+        case system(items:[Operation],others:[MO]?)
+    }
+    
+    
 }
 

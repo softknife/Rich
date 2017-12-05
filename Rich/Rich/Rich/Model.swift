@@ -8,8 +8,22 @@
 
 import UIKit
 
+protocol AdditionalConfiguration:class {
+    
+    @discardableResult
+    func plus(_ additional: (Self)->()) ->Self
+}
+extension AdditionalConfiguration{
+    
+    @discardableResult
+    func plus(_ additional: (Self)->()) ->Self{
+        additional(self)
+        return self
+    }
 
-public class Operation: ExpressibleByStringLiteral{
+}
+
+final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration{
     
     public enum Value{
         case text(String)
@@ -18,18 +32,20 @@ public class Operation: ExpressibleByStringLiteral{
 
     public typealias Action = ()->()
     
-    let value:Value
+    var value:Value
     var textColor : UIColor = .gray
     var font : UIFont = .systemFont(ofSize: 16)
     var backgroundColor:UIColor = .clear
     var action : Action? = nil
+    var cornerRadius : CGFloat = 0
     
-    public init(value:Value,textColor:UIColor = .gray,font:UIFont = .systemFont(ofSize: 16),backgroundColor:UIColor = .clear , action:Action? = nil) {
+    public init(value:Value,textColor:UIColor = .gray,font:UIFont = .systemFont(ofSize: 16),backgroundColor:UIColor = .clear , action:Action? = nil,cornerRadius:CGFloat = 0) {
         self.value = value
         self.textColor = textColor
         self.font = font
         self.backgroundColor = backgroundColor
         self.action = action
+        self.cornerRadius = cornerRadius
         
     }
     
@@ -38,17 +54,20 @@ public class Operation: ExpressibleByStringLiteral{
         self.value = .text(value)
     }
 
+    
+    
 }
 
 
 
-public struct Description:ExpressibleByStringLiteral{
+final public class Description:ExpressibleByStringLiteral,AdditionalConfiguration{
     
     let value:String
     var textColor : UIColor = .gray
     var font : UIFont = .systemFont(ofSize: 17)
     var backgroundColor:UIColor = .clear
     var numberOfLines : Int = 1
+    var cornerRadius : CGFloat = 0
 
     public init(value:String,textColor:UIColor = .gray ,font:UIFont = .systemFont(ofSize: 17), backgroundColor:UIColor = .clear,numberOfLines:Int = 1){
         self.value = value
@@ -58,12 +77,12 @@ public struct Description:ExpressibleByStringLiteral{
         self.numberOfLines = numberOfLines
     }
     
-    public init(stringLiteral value: String) {
+    public required init(stringLiteral value: String) {
         self.value = value
     }
 }
 
-public struct Image {
+final public class Image:AdditionalConfiguration {
  
     let value:UIImage?
     var backgroundColor:UIColor = .clear

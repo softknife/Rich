@@ -23,6 +23,9 @@ extension MessageViewController{
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        
+        testActionSheet()
+        
 //        if arc4random_uniform(10) % 2 == 0 {
 //
 //            HUD.show( .success(description: "成功"), inView: view)
@@ -34,28 +37,6 @@ extension MessageViewController{
 //
 //        }else{
         
-        let others = [
-        (CGFloat(10),Operation(value: .text("确定"), textColor: .gray, backgroundColor: UIColor(white: 1, alpha: 0.7), action: {
-            print("确定")
-            Sheet.hide()
-        })),
-        (CGFloat(10),Operation(value: .text("取消"), textColor: .gray, backgroundColor: UIColor(white: 1, alpha: 0.7), action: {
-            print("取消")
-            Sheet.hide()
-
-        }))]
-    
-        
-        Sheet.show(
-            .system(items:
-            [Operation(value: .text("浦发银行"), textColor: .black, backgroundColor: .white, action: {
-                print("浦发银行")
-            }),Operation(value: .text("建设银行"), textColor: .blue, backgroundColor: .orange, action: {
-                print("建设银行")
-            }),Operation(value: .text("招商银行"), textColor: .blue, backgroundColor: .purple, action: {
-                print("招商银行")
-                
-            })],others: others),inView: view)
 //        Alert.show(.image(title:"测试图片",image:Image(named:"thumb"),operations:["确定"]), inView: view)
         
 //            Alert.show(.default(title:"测试",subTitle:"测试点什么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点测试点什么?测试点什么?么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点测试点什么?测试点什么?什么?测试点测试点什么?测试点什么?",operation1:"确定",operation2:"取消"), inView: view)
@@ -65,6 +46,52 @@ extension MessageViewController{
         
         
         
+    }
+    
+    func testActionSheet()  {
+   
+        
+        let confirm = Sheet.MO(stringLiteral:"确定").plus { (mo) in
+            mo.margin = UIEdgeInsets(top:10)
+            let op = mo.operation
+            op.backgroundColor = UIColor(white: 1, alpha: 0.7)
+            op.textColor = .gray
+            op.cornerRadius = 10
+            op.action = {
+                print("确定")
+                Sheet.hide()
+            }
+
+        }
+        
+        let cancel = Sheet.MO(stringLiteral: "取消").plus { (mo) in
+            mo.margin = UIEdgeInsets(top: 5)
+            mo.operation.plus{
+                $0.action = {
+                    print("取消")
+                    Sheet.hide()
+                }
+                $0.textColor = .gray
+                $0.backgroundColor = UIColor(white: 1, alpha: 0.7)
+                $0.cornerRadius = 10
+            }
+            
+        }
+        
+        
+        Sheet.show(
+            .system(items:
+                [
+                    Operation(value: .text("浦发银行"), textColor: .black, backgroundColor: .white, action: {
+                        print("浦发银行")
+                    }),
+                    Operation(value: .text("建设银行"), textColor: .blue, backgroundColor: .orange, action: {
+                        print("建设银行")
+                    }),
+                    Operation(value: .text("招商银行"), textColor: .blue, backgroundColor: .purple, action: {
+                        print("招商银行")
+                    })],others: [confirm,cancel]),inView: view)
+
     }
 }
 

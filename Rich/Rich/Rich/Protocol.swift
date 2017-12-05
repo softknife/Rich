@@ -85,7 +85,7 @@ extension CommonAction where Self:BaseConfigure & DistinguishAction{
             
         case .refresh: refreshBody()
         case .dying:
-            Rich.shared.remove(self)
+            Rich.remove(self)
             turnToHide()
         }
     }
@@ -94,15 +94,15 @@ extension CommonAction where Self:BaseConfigure & DistinguishAction{
     
     func prepare(){
 
-        let nodes = Rich.shared.nodes
+        let nodes = Rich.getNodes()
         if nodes.isEmpty {
-            Rich.shared.nodes.append(self)
+            Rich.add(self)
             state = .awake(time: .first)
             return
         }
         
         
-        let specificNodes = Rich.shared.nodes(type: type)
+        let specificNodes = Rich.getNodes(type: type)
         if specificNodes.isEmpty {
             
             switch type {
@@ -111,10 +111,10 @@ extension CommonAction where Self:BaseConfigure & DistinguishAction{
                 nodes.forEach{$0.state = .sleep}
                 
                 state = .awake(time: .first)
-                Rich.shared.nodes.append(self)
+                Rich.add(self)
 
             case .hud:
-                Rich.shared.nodes.append(self)
+                Rich.add(self)
             }
             
             return
@@ -132,7 +132,7 @@ extension CommonAction where Self:BaseConfigure & DistinguishAction{
             
         case .alert,.sheet:
             
-            Rich.shared.nodes.append(self)
+            Rich.add(self)
             configBody()
 
         }
@@ -143,7 +143,7 @@ extension CommonAction where Self:BaseConfigure & DistinguishAction{
     
     func hide(showNext:Bool) {
         
-        if let next = Rich.shared.nextWillShow(from: self) {
+        if let next = Rich.nextWillShow(from: self) {
             switch next.state {
             case .initial:
                 next.state = .awake(time: .first)
@@ -180,6 +180,7 @@ protocol BodyConfigure  {
 //    
 //}
 
+
 //////////////////////////////////////////////////////////////////////////////////////////
 // Expose to Users directly
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -197,7 +198,7 @@ extension ExternalAction where Self:Skeleton{
     
     static func hide(){
         
-        let activeNode = Rich.shared.activeNode()
+        let activeNode = Rich.activeNode()
         activeNode?.hide(showNext: true)
         
     }

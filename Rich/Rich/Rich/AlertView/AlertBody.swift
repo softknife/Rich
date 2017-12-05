@@ -172,9 +172,9 @@ extension AlertBody {
             super.init(frame: .zero)
             
 
-            for (index ,op) in ops.enumerated() {
-                
-                if index > 0 {
+            for (offset, op) in ops.enumerated() {
+
+                if offset > 0 {
                     
                     let separete = UIView()
 //                    separete.backgroundColor = .lightGray

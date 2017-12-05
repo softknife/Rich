@@ -12,10 +12,23 @@ internal class Button : UIButton {
     
     var click : ((Button)->())?
     
-    
+    let content : Operation
     internal init(content:Operation) {
+        self.content = content
         super.init(frame:.zero)
 
+        setup()
+    }
+    
+    required internal init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension Button{
+    
+    private func setup(){
+        
         switch content.value {
         case .image(let image):
             setImage(image, for: .normal)
@@ -26,16 +39,14 @@ internal class Button : UIButton {
             titleLabel?.textAlignment = .center
         }
         
+        if content.cornerRadius > 0 {
+            layer.cornerRadius = content.cornerRadius
+        }
+        
         backgroundColor = content.backgroundColor
         addTarget(self, action: #selector(buttonClick), for: .touchUpInside)
-    }
-    
-    required internal init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
 
-extension Button{
+    }
     
     @objc private func buttonClick(){
         click?(self)

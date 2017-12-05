@@ -58,7 +58,7 @@ extension Alert{
     func configBody(){
         
         guard let container = containerView else {
-            Rich.shared.remove(self)
+            Rich.remove(self)
             return
         }
         
@@ -84,7 +84,7 @@ extension Alert{
             if op.action == nil {
                 op.action =  { [weak self] in
                     guard let weakSelf = self else {return}
-                    Rich.shared.remove(weakSelf)
+                    Rich.remove(weakSelf)
                     weakSelf.turnToHide()
                 }
             }

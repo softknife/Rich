@@ -49,17 +49,32 @@ extension SheetBody {
     }
     
     private func configItems(_ items:[Operation]){
-        for (index,item) in items.enumerated() {
-            if index > 0 {
+        
+        let container = UIView()
+        container.layer.cornerRadius = layer.cornerRadius
+        container.layer.masksToBounds = true
+        container.backgroundColor = .clear
+        container.configureLayout { (layout) in
+            layout.isEnabled = true
+            layout.justifyContent = .center
+            layout.alignItems = .stretch
+        }
+        addSubview(container)
+        
+        
+        for (offset, item) in items.enumerated() {
+            
+            if offset > 0 {
                 let line = SeperateLine()
-                addSubview(line)
+                container.addSubview(line)
             }
+            
             
             let button = Button(content: item)
             button.click = {btn in
                 item.action?()
             }
-            addSubview(button)
+            container.addSubview(button)
             button.configureLayout(block: { (layout) in
                 layout.isEnabled = true
                 layout.height = 50
@@ -68,24 +83,33 @@ extension SheetBody {
         }
     }
     
-    private func configOthers(_ items:[(CGFloat,Operation)]){
+    private func configOthers(_ items:[Sheet.MO]){
         
-        for item in items.enumerated() {
+        for (_, item) in items.enumerated() {
             
-            if item.1.0 <= 0 {
+            let marginOp = item
+            
+            if marginOp.margin.top <= 0 {
                 let line = SeperateLine()
                 addSubview(line)
             }
             
-            let button = Button(content: item.1.1)
+            let button = Button(content: marginOp.operation)
             button.click = {btn in
-                item.1.1.action?()
+                marginOp.operation.action?()
             }
             addSubview(button)
             button.configureLayout(block: { (layout) in
                 layout.isEnabled = true
                 layout.height = 50
-                layout.marginTop = YGValue(item.1.0)
+                
+                let margin = marginOp.margin
+                if margin.top > 0 { layout.marginTop = YGValue(margin.top) }
+                if margin.left > 0 { layout.marginLeft = YGValue(margin.left) }
+                if margin.bottom > 0 { layout.marginBottom = YGValue(margin.bottom) }
+                if margin.right > 0 { layout.marginRight = YGValue(margin.right) }
+        
+
             })
 
         }

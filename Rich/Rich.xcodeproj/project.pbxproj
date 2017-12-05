@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		44A095C8648878EE5055659B /* Pods_Rich.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C10039F127BBFDB57A324AF /* Pods_Rich.framework */; };
-		911F860B1FD4EB0A00FA1A0C /* LiteralExpansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911F860A1FD4EB0A00FA1A0C /* LiteralExpansion.swift */; };
+		911785C81FD6E430003CBDB0 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911785C71FD6E430003CBDB0 /* Tools.swift */; };
+		911F860B1FD4EB0A00FA1A0C /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911F860A1FD4EB0A00FA1A0C /* Model.swift */; };
 		911F86151FD53AE000FA1A0C /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911F860D1FD53AE000FA1A0C /* Alert.swift */; };
 		911F86161FD53AE000FA1A0C /* AlertBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911F860E1FD53AE000FA1A0C /* AlertBody.swift */; };
 		911F86171FD53AE000FA1A0C /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911F86101FD53AE000FA1A0C /* Sheet.swift */; };
@@ -39,7 +40,8 @@
 /* Begin PBXFileReference section */
 		4AC31DAFA9C2BF924A8E06AB /* Pods-Rich.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rich.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Rich/Pods-Rich.debug.xcconfig"; sourceTree = "<group>"; };
 		5C10039F127BBFDB57A324AF /* Pods_Rich.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rich.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		911F860A1FD4EB0A00FA1A0C /* LiteralExpansion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteralExpansion.swift; sourceTree = "<group>"; };
+		911785C71FD6E430003CBDB0 /* Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tools.swift; sourceTree = "<group>"; };
+		911F860A1FD4EB0A00FA1A0C /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		911F860D1FD53AE000FA1A0C /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		911F860E1FD53AE000FA1A0C /* AlertBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertBody.swift; sourceTree = "<group>"; };
 		911F86101FD53AE000FA1A0C /* Sheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sheet.swift; sourceTree = "<group>"; };
@@ -172,12 +174,13 @@
 				911F86121FD53AE000FA1A0C /* HUD */,
 				911F861D1FD53FEE00FA1A0C /* View */,
 				91CBABDF1FD19F320010F17A /* Protocol.swift */,
-				911F860A1FD4EB0A00FA1A0C /* LiteralExpansion.swift */,
+				911F860A1FD4EB0A00FA1A0C /* Model.swift */,
 				91CBABE11FD19F320010F17A /* Background.swift */,
 				91CBABE31FD19F320010F17A /* Eraser.swift */,
 				91CBABE61FD19F320010F17A /* Rich.swift */,
 				91CBABE71FD19F320010F17A /* Enum.swift */,
 				91CBABE81FD19F320010F17A /* CocoaLayout.swift */,
+				911785C71FD6E430003CBDB0 /* Tools.swift */,
 			);
 			path = Rich;
 			sourceTree = "<group>";
@@ -358,9 +361,10 @@
 				91CBABF31FD19F320010F17A /* Enum.swift in Sources */,
 				91CBABD91FD19F250010F17A /* LayoutInclusionViewController.swift in Sources */,
 				911F86201FD53FEE00FA1A0C /* Button.swift in Sources */,
+				911785C81FD6E430003CBDB0 /* Tools.swift in Sources */,
 				91CBABEF1FD19F320010F17A /* Eraser.swift in Sources */,
 				91CBABF71FD19F3D0010F17A /* SingleLabelCollectionCell.swift in Sources */,
-				911F860B1FD4EB0A00FA1A0C /* LiteralExpansion.swift in Sources */,
+				911F860B1FD4EB0A00FA1A0C /* Model.swift in Sources */,
 				911F86231FD53FFE00FA1A0C /* SeperateLine.swift in Sources */,
 				91CBABED1FD19F320010F17A /* Background.swift in Sources */,
 			);
