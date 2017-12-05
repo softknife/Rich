@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import YogaKit
 
 class SheetBody: UIView {
     
@@ -30,7 +31,8 @@ extension SheetBody {
     private func setup(){
         layer.cornerRadius = 10
         layer.masksToBounds = true
-
+        backgroundColor = .clear
+        
         guard case let Sheet.ContentType.system(items, others) = content.type else {
             return
         }
@@ -45,11 +47,41 @@ extension SheetBody {
     }
     
     private func configItems(_ items:[Operation]){
-        
+        for (index,item) in items.enumerated() {
+            if index > 0 {
+                let line = SeperateLine()
+                addSubview(line)
+            }
+            
+            let button = Button(content: item)
+            addSubview(button)
+            button.configureLayout(block: { (layout) in
+                layout.isEnabled = true
+                layout.height = 50
+            })
+            
+        }
     }
     
     private func configOthers(_ items:[(CGFloat,Operation)]){
         
+        for item in items.enumerated() {
+            
+            if item.1.0 <= 0 {
+                let line = SeperateLine()
+                addSubview(line)
+            }
+            
+            let button = Button(content: item.1.1)
+            
+            addSubview(button)
+            button.configureLayout(block: { (layout) in
+                layout.isEnabled = true
+                layout.height = 50
+                layout.marginTop = YGValue(item.1.0)
+            })
+
+        }
     }
     
 }

@@ -66,10 +66,10 @@ extension Background{
         case custom(YGLayoutConfigurationBlock)
     }
     
-    public enum ViewType {
-        case `defualt`(UIColor)
-        case blur(UIBlurEffectStyle)
-    }
+//    public enum ViewType {
+//        case `defualt`(UIColor)
+//        case blur(UIBlurEffectStyle)
+//    }
     
     //    class BlurView: UIVisualEffectView {
     //

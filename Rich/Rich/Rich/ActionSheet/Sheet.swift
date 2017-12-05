@@ -35,7 +35,13 @@ public class Sheet:Skeleton,ExternalAction{
         if let yoga = yoga {
             customLayout = .custom(yoga)
         }else{
-            customLayout = .default(container)
+            customLayout = .custom({ [unowned container] (layout) in
+                layout.isEnabled = true
+                layout.justifyContent = .flexEnd
+                layout.alignItems = .center
+                layout.width = YGValue(container.frame.size.width)
+                layout.height = YGValue(container.frame.size.height)
+            })
         }
         
         self.background = Background(color: .clear, layout: customLayout)
@@ -59,6 +65,7 @@ extension Sheet{
         body.configureLayout { (layout) in
             layout.isEnabled = true
             layout.width = YGValue(container.frame.width - 60)
+            layout.marginBottom = 10
             layout.justifyContent = .center
             layout.alignItems = .stretch
         }
@@ -71,8 +78,27 @@ extension Sheet{
     
     func turnToShow(time:State.Repeat){
         
+        guard let container = containerView else {
+            Rich.shared.remove(self)
+            return
+        }
+        
+        container.addSubview(background)
+        background.yoga.applyLayout(preservingOrigin: true)
+        
+        background.subviews.first!.transform = CGAffineTransform(translationX: 0, y: background.subviews.first!.bounds.height)
+        UIView.animate(withDuration: 1, animations: {
+            self.background.subviews.first!.transform = CGAffineTransform.identity
+        })
     }
+    
     func turnToHide(){
+        
+        UIView.animate(withDuration: 1, animations: {
+            self.background.alpha = 0
+        }) { (finished) in
+            self.background.removeFromSuperview()
+        }
         
     }
 
