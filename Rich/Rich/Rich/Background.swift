@@ -10,7 +10,7 @@ import UIKit
 import YogaKit
 
 
-class Background:UIView {
+public class Background:UIView {
     
     //    fileprivate var viewType : ViewType
 //    var contentView : BodyConfigure?
@@ -18,7 +18,7 @@ class Background:UIView {
     
     
     
-    init(color:UIColor = .clear , layout:InitialLayout) {
+    public init(color:UIColor = .clear , layout:InitialLayout) {
         
         super.init(frame: .zero)
         //        self.viewType = viewType
@@ -57,7 +57,7 @@ class Background:UIView {
         
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
  

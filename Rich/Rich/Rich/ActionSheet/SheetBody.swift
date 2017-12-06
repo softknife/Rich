@@ -83,7 +83,7 @@ extension SheetBody {
         }
     }
     
-    private func configOthers(_ items:[Sheet.MO]){
+    private func configOthers(_ items:[MarginOperation]){
         
         for (_, item) in items.enumerated() {
             
@@ -109,10 +109,10 @@ extension SheetBody {
                 if margin.bottom > 0 { layout.marginBottom = YGValue(margin.bottom) }
                 if margin.right > 0 { layout.marginRight = YGValue(margin.right) }
         
-
             })
 
         }
     }
     
 }
+

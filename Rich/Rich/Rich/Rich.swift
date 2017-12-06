@@ -61,20 +61,22 @@ extension Rich{
     }
     
     internal static func nextWillShow(from base:Node) ->Node?{
-        let index = Rich.shared.nodes.index { (node) -> Bool in
-            return node === base
+        
+        var copyNodes = [Node]()
+        
+        for node in Rich.getNodes().enumerated() {
+            if node.1 !== base {
+                copyNodes.append(node.1)
+            }else{
+                break
+            }
         }
         
-        guard let idx = index else  {
-            return nil
+        if copyNodes.isEmpty {
+            copyNodes = Rich.shared.nodes.filter{$0 !== base}
         }
-        
-        let previous =  idx.advanced(by: -1)
-        if previous < 0 {
-            return nil
-        }
-        
-        return Rich.shared.nodes[previous]
+
+        return copyNodes.last
     }
 }
 

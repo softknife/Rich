@@ -51,12 +51,12 @@ extension MessageViewController{
     func testActionSheet()  {
    
         
-        let confirm = Sheet.MO(stringLiteral:"确定").plus { (mo) in
-            mo.margin = UIEdgeInsets(top:10)
+        let confirm = MarginOperation(stringLiteral:"确定").plus { (mo) in
+            //mo.margin = UIEdgeInsets(top:10)
             let op = mo.operation
-            op.backgroundColor = UIColor(white: 1, alpha: 0.7)
-            op.textColor = .gray
+            op.backgroundColor = .green
             op.cornerRadius = 10
+            op.textColor = .white
             op.action = {
                 print("确定")
                 Sheet.hide()
@@ -64,7 +64,7 @@ extension MessageViewController{
 
         }
         
-        let cancel = Sheet.MO(stringLiteral: "取消").plus { (mo) in
+        let cancel = MarginOperation(stringLiteral: "取消").plus { (mo) in
             mo.margin = UIEdgeInsets(top: 5)
             mo.operation.plus{
                 $0.action = {

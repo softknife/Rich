@@ -41,7 +41,7 @@ public enum State:Equatable{
     case sleep
     case awake(time:Repeat)
     case refresh
-    case dying
+    case dying(finished:((Bool)->())?)
     
     private func value()->String{
         switch self {

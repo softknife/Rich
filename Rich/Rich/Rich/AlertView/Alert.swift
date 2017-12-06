@@ -9,7 +9,7 @@
 import UIKit
 import YogaKit
 
-public class Alert:Skeleton,ExternalAction{
+public class Alert:Skeleton{
     
     var type : RichType = .alert
     var state:State = .initial{
@@ -82,10 +82,9 @@ extension Alert{
         
         for op in ops {
             if op.action == nil {
-                op.action =  { [weak self] in
+                op.action =  {  [weak self] in
                     guard let weakSelf = self else {return}
-                    Rich.remove(weakSelf)
-                    weakSelf.turnToHide()
+                    weakSelf.hide()
                 }
             }
         }
@@ -99,19 +98,20 @@ extension Alert{
         background.yoga.applyLayout(preservingOrigin: true)
     }
     
-    func turnToHide(){
+    func turnToHide(finished:((Bool)->())?){
         
         UIView.animate(withDuration: 1, animations: {
             self.background.alpha = 0
-        }) { (finished) in
+        }) { (finish) in
             self.background.removeFromSuperview()
+            finished?(finish)
         }
 
     }
 
 }
 
- 
+
 extension Alert {
     public struct Content:ContentBindable{
         var type:ContentType
@@ -126,11 +126,33 @@ extension Alert {
     }
     
     
-    
-    internal enum ContentType{
+    enum ContentType{
         case `default`(title:Description?,subTitle:Description?,operations:[Operation])
         case image(title:Description?,image:Image?,operations:[Operation])
 
     }
+}
+
+extension Alert {
+ 
+    @discardableResult
+    public static func show(_ content:Alert.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil ,animation:Animation = .fadedIn)->Alert{
+        let alert =  Alert(content:content,container:container,yoga:yoga,animation:animation)
+        alert.prepare()
+        return alert
+    }
+    
+    public func hide() {
+        hide(showNext: true)
+    }
+    
+    public static func hide(){
+        
+        let activeNode = Rich.activeNode()
+        activeNode?.hide(showNext: true)
+        
+    }
+
+
 }
 

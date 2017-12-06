@@ -16,24 +16,28 @@ import YogaKit
 typealias Skeleton = CommonConfigure & DistinguishAction & CommonAction
 
 
+
+protocol BaseConfigure:class  {
+    
+    weak var containerView : UIView? {get set}
+    var background:Background {get set}
+    var animation:Animation {get set}
+    var type : RichType{get set}
+    var state:State {get set}
+
+}
+
+
+
 protocol ContentBindable {
     associatedtype ContentType
     var type : ContentType{get set}
     
 }
 
-
-protocol BaseConfigure:class  {
-    
-    var type : RichType{get set}
-    var state:State {get set}
-    weak var containerView : UIView? {get set}
-    var background:Background {get set}
-    var animation:Animation {get set}
-
-}
 protocol CommonConfigure:BaseConfigure{
     
+
     associatedtype Content where Content: ContentBindable
     var content:Content{get set}
     
@@ -50,7 +54,7 @@ protocol DistinguishAction {
     
     func goToSleep()
     func turnToShow(time:State.Repeat)
-    func turnToHide()
+    func turnToHide(finished:((Bool)->())?)
 }
 
 extension DistinguishAction where Self:CommonConfigure{
@@ -69,7 +73,7 @@ protocol CommonAction {
     func hide(showNext:Bool)
 }
 
-extension CommonAction where Self:BaseConfigure & DistinguishAction{
+extension CommonAction where Self:CommonConfigure & DistinguishAction{
     
     func changeAccordingState()  {
         
@@ -84,9 +88,10 @@ extension CommonAction where Self:BaseConfigure & DistinguishAction{
             turnToShow(time: time)
             
         case .refresh: refreshBody()
-        case .dying:
+        case .dying(let finished):
+            turnToHide(finished:finished)
             Rich.remove(self)
-            turnToHide()
+
         }
     }
     
@@ -143,7 +148,13 @@ extension CommonAction where Self:BaseConfigure & DistinguishAction{
     
     func hide(showNext:Bool) {
         
-        if let next = Rich.nextWillShow(from: self) {
+        guard let next = Rich.nextWillShow(from: self) else {
+            state = .dying(finished:nil)
+            return
+        }
+        
+        state = .dying(finished: { (_) in
+            
             switch next.state {
             case .initial:
                 next.state = .awake(time: .first)
@@ -152,9 +163,9 @@ extension CommonAction where Self:BaseConfigure & DistinguishAction{
             default:
                 break
             }
-        }
-        
-        state = .dying
+
+        })
+
 
     }
   
@@ -184,60 +195,4 @@ protocol BodyConfigure  {
 //////////////////////////////////////////////////////////////////////////////////////////
 // Expose to Users directly
 //////////////////////////////////////////////////////////////////////////////////////////
-protocol ExternalAction{
-    
-    func hide()
-    static func hide()
-}
-
-extension ExternalAction where Self:Skeleton{
-    
-    func hide() {
-        hide(showNext: true)
-    }
-    
-    static func hide(){
-        
-        let activeNode = Rich.activeNode()
-        activeNode?.hide(showNext: true)
-        
-    }
-
-    
-}
-
-extension ExternalAction where Self:HUD{
-    
-    @discardableResult
-    static func show(_ content:HUD.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil,animation:Animation = .fadedIn)->HUD{
-        
-        let hud =  HUD(content:content,container:container,yoga:yoga,animation:animation)
-        hud.prepare()
-        
-        return hud
-    }
-}
-
-extension ExternalAction where Self:Alert {
-    
-    @discardableResult
-    static func show(_ content:Alert.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil ,animation:Animation = .fadedIn)->Alert{
-        let alert =  Alert(content:content,container:container,yoga:yoga,animation:animation)
-        alert.prepare()
-        return alert
-    }
-
-}
-
-extension ExternalAction where Self:Sheet {
-    
-    @discardableResult
-    static func show(_ content:Sheet.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil,animation:Animation = .fadedIn)->Sheet{
-        let sheet =  Sheet(content:content,container:container,yoga:yoga,animation:animation)
-        sheet.prepare()
-        return sheet
-    }
-    
-}
-
 

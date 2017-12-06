@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol AdditionalConfiguration:class {
+public protocol AdditionalConfiguration:class {
     
     @discardableResult
     func plus(_ additional: (Self)->()) ->Self
 }
-extension AdditionalConfiguration{
+public extension AdditionalConfiguration{
     
     @discardableResult
     func plus(_ additional: (Self)->()) ->Self{
@@ -55,6 +55,21 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
     }
 
     
+    
+}
+
+
+final public class MarginOperation:ExpressibleByStringLiteral,AdditionalConfiguration {
+    
+    var operation : Operation = ""
+    var margin : UIEdgeInsets = UIEdgeInsets(top:10)
+    
+    init() { }
+    
+    public init(stringLiteral value: String) {
+        operation = Operation(stringLiteral: value)
+        operation.backgroundColor = UIColor(white:1.0,alpha:0.7)
+    }
     
 }
 

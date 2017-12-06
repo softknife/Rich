@@ -9,7 +9,7 @@
 import UIKit
 import YogaKit
 
-public class HUD:Skeleton,ExternalAction{
+public class HUD:Skeleton{
     
     var type : RichType = .hud
     var state:State = .initial{
@@ -97,12 +97,13 @@ extension HUD{
     
     
     
-    func turnToHide(){
+    func turnToHide(finished:((Bool)->())?){
         
         UIView.animate(withDuration: 1, animations: {
             self.background.alpha = 0
-        }) { (finished) in
+        }) { (finish) in
             self.background.removeFromSuperview()
+            finished?(finish)
         }
         
     }
@@ -118,27 +119,27 @@ extension HUD {
     public struct Content:ContentBindable {
         var type: ContentType
         
-        static var systemActivity:Content{
+        public static var systemActivity:Content{
             return Content(type: .systemActivity)
         }
         
-        static func success(description:Description? = nil)->Content{
+        public static func success(description:Description? = nil)->Content{
             return Content(type: .success(description: description))
         }
         
-        static func failure(description:Description? = nil )->Content{
+        public static func failure(description:Description? = nil )->Content{
             return Content(type: .failure(description: description))
         }
         
-        static func titleThenImage(title:Description? = nil , image:Image? = nil )->Content{
+        public static func titleThenImage(title:Description? = nil , image:Image? = nil )->Content{
             return Content(type: .titleThenImage(title: title, image: image))
         }
         
-        static func imageThenName(image:Image? = nil ,name:Description? = nil )->Content{
+        public static func imageThenName(image:Image? = nil ,name:Description? = nil )->Content{
             return Content(type: .imageThenName(image: image, name: name))
         }
         
-        static func progress(_ type:ProgressType)->Content{
+        public static func progress(_ type:ProgressType)->Content{
             return Content(type: .progress(type))
         }
     }
@@ -165,6 +166,30 @@ extension HUD {
 }
 
 
+extension HUD {
+    
+    @discardableResult
+    public static func show(_ content:HUD.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil,animation:Animation = .fadedIn)->HUD{
+        
+        let hud =  HUD(content:content,container:container,yoga:yoga,animation:animation)
+        hud.prepare()
+        
+        return hud
+    }
+    
+    public func hide() {
+        hide(showNext: true)
+    }
+    
+    public static func hide(){
+        
+        let activeNode = Rich.activeNode()
+        activeNode?.hide(showNext: true)
+        
+    }
+    
+
+}
 
 
 

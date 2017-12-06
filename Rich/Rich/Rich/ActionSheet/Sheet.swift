@@ -9,8 +9,8 @@
 import UIKit
 import YogaKit
 
-public class Sheet:Skeleton,ExternalAction{
-    
+public class Sheet:Skeleton{
+
     var type : RichType = .sheet
     var state:State = .initial{
         didSet{
@@ -18,19 +18,19 @@ public class Sheet:Skeleton,ExternalAction{
         }
     }
 
-    weak var containerView:UIView?
+    weak  var containerView:UIView?
     var background : Background
     var animation:Animation
     
     var content:Content
-    
-    
+
+
     required public init(content:Content, container:UIView,yoga:YGLayoutConfigurationBlock?,animation:Animation){
-        
+
         self.content = content
         self.containerView = container
         self.animation = animation
-        
+
         let customLayout:Background.InitialLayout
         if let yoga = yoga {
             customLayout = .custom(yoga)
@@ -43,23 +43,23 @@ public class Sheet:Skeleton,ExternalAction{
                 layout.height = YGValue(container.frame.size.height)
             })
         }
-        
+
         self.background = Background(color: .clear, layout: customLayout)
-        
+
     }
 }
 
 extension Sheet{
-    
+
     func configBody(){
-        
+
         guard let container = containerView else {
             Rich.remove(self)
             return
         }
-        
+
         let body = SheetBody(content: content)
-        
+
         body.configureLayout { (layout) in
             layout.isEnabled = true
             layout.width = YGValue(container.frame.width - 60)
@@ -67,74 +67,81 @@ extension Sheet{
             layout.justifyContent = .center
             layout.alignItems = .stretch
         }
-        
+
         background.addSubview(body)
 
         background.body = body
     }
- 
-    
+
+
     func turnToShow(time:State.Repeat){
-        
+
         guard let container = containerView else {
             Rich.remove(self)
             return
         }
-        
+
         container.addSubview(background)
         background.yoga.applyLayout(preservingOrigin: true)
-        
+
         background.body!.transform = CGAffineTransform(translationX: 0, y: background.body!.bounds.height)
         UIView.animate(withDuration: 1, animations: {
             self.background.body!.transform = CGAffineTransform.identity
         })
     }
-    
-    func turnToHide(){
-        
+
+    func turnToHide( finished:((Bool)->())?){
+
         UIView.animate(withDuration: 1, animations: {
             self.background.body!.transform = CGAffineTransform(translationX: 0, y: self.background.body!.bounds.height)
-        }) { (finished) in
+        }) { (finish) in
             self.background.removeFromSuperview()
+            finished?(finish)
         }
-        
+
     }
 
 }
 
- 
+
 extension Sheet {
-    
+
     public struct Content:ContentBindable{
-        
+
         var type:ContentType
-        
-        public static func system(items:[Operation],others:[MO]? = nil) ->Content {
+
+        public static func system(items:[Operation],others:[MarginOperation]? = nil) ->Content {
             return Content(type: .system(items: items, others: others))
         }
-        
+
     }
-    
-    final public class MO:ExpressibleByStringLiteral,AdditionalConfiguration {
-        
-        var operation : Operation = ""
-        var margin : UIEdgeInsets = .zero
-        
-        init() { }
-        
-        public init(stringLiteral value: String) {
-            operation = Operation(stringLiteral: value)
-            operation.backgroundColor = UIColor(white:1.0,alpha:0.7)
-        }
-        
+
+    enum ContentType{
+        case system(items:[Operation],others:[MarginOperation]?)
     }
-    
-    
-    
-    internal enum ContentType{
-        case system(items:[Operation],others:[MO]?)
-    }
-    
-    
+
+
 }
+
+extension  Sheet {
+    
+    @discardableResult
+    public static func show(_ content:Sheet.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil,animation:Animation = .fadedIn)->Sheet{
+        let sheet =  Sheet(content:content,container:container,yoga:yoga,animation:animation)
+        sheet.prepare()
+        return sheet
+    }
+
+    public func hide() {
+        hide(showNext: true)
+    }
+    
+    public static func hide(){
+        
+        let activeNode = Rich.activeNode()
+        activeNode?.hide(showNext: true)
+        
+    }
+}
+
 
