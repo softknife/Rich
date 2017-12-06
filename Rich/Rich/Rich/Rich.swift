@@ -44,6 +44,7 @@ extension Rich{
        Rich.shared.nodes = Rich.shared.nodes.filter{ $0 !== node }
     }
     
+    
     internal static func containNode(type:RichType)->Bool{
         return !(getNodes(type: type).isEmpty)
     }

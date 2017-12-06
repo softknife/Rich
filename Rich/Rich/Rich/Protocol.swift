@@ -213,7 +213,7 @@ extension CommonAction where Self:CommonConfigure & DistinguishAction{
     
     func setDefaultHideViewAction(_ ops:[Operation]){
         for op in ops {
-            if op.action == nil && op.triggerHideView{
+            if op.action == nil && op.triggerHide{
                 op.action =  {  [weak self] in
                     guard let weakSelf = self else {return}
                     weakSelf.hide(showNext: true)
@@ -252,16 +252,16 @@ protocol AutoTriggerHideActiveView:class{
     
     
     /// Decide to hide active view or not when associated action is triggered
-    var triggerHideView:Bool {get set}
+    var triggerHide:Bool {get set}
     @discardableResult
-    func triggerHideView(_ hide:Bool) -> Self
+    func triggerHide(_ hide:Bool) -> Self
 }
 
 extension AutoTriggerHideActiveView{
     
     @discardableResult
-    func triggerHideView(_ hide:Bool) -> Self{
-        triggerHideView = hide
+    func triggerHide(_ hide:Bool) -> Self{
+        triggerHide = hide
         return self
     }
 }

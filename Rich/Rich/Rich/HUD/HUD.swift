@@ -184,10 +184,12 @@ extension HUD {
     }
     
     public static func hide(){
-        
-        let activeNode = Rich.activeNode()
-        activeNode?.hide(showNext: true)
-        
+
+        let activeNode = Rich.getNodes(type: .hud)
+        activeNode.forEach({ (node) in
+            node.hide(showNext: true)
+        })
+
     }
     
 

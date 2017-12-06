@@ -39,7 +39,7 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
     var action : Action? = nil
     var cornerRadius : CGFloat = 0
     
-    var triggerHideView:Bool = false
+    var triggerHide:Bool = false
 
     
     public init(value:Value,textColor:UIColor = .gray,font:UIFont = .systemFont(ofSize: 16),backgroundColor:UIColor = .clear , action:Action? = nil,cornerRadius:CGFloat = 0) {

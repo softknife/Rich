@@ -25,42 +25,63 @@ extension MessageViewController{
         
         
         if arc4random_uniform(10) % 2 == 0 {
-            testActionSheet()
+            
+            
+            if arc4random_uniform(10) % 2 == 0{
+                testActionSheet()
+
+            }else{
+                testHUD()
+            }
+            
         }else{
             testAlert()
         }
         
-//        if arc4random_uniform(10) % 2 == 0 {
-//
-//            HUD.show( .success(description: "成功"), inView: view)
-//        HUD.show( .systemActivity, inView: view)
 
-//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-//                HUD.hide()
-//            }
-//
-//        }else{
-        
-        
-
-//        }
         
         
         
     }
     
+    private func testHUD() {
+        
+        if arc4random_uniform(10) % 2 == 0 {
+            let ad = HUD.show( .success(description: "成功"), inView: view)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                ad.hide()
+            }
+
+        }else{
+            HUD.show( .systemActivity, inView: view)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                HUD.hide()
+            })
+        }
+
+
+    }
+    
     private func testAlert(){
         
-//        Alert.show(.image(title:"测试图片",image:Image(named:"thumb"),operations:["确定"]), inView: view)
         
-        let desc = ["点什么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点",
-                    "点什么?测试点什么?试 🛰大大大",
-                    "试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测",
-                    "😁😁😁😁😁😁😁😁"]
         
-        let sub = desc[Int(arc4random_uniform(UInt32(desc.count - 1)))]
-        
-        Alert.show(.default(title:"测试",subTitle:Description(stringLiteral:"\(sub)"),operations:[Operation(stringLiteral:"确定").triggerHideView(true),"取消"]), inView: view)
+        if arc4random_uniform(10) % 2 == 0 {
+            
+            let desc = ["点什么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点",
+                        "点什么?测试点什么?试 🛰大大大",
+                        "试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测",
+                        "😁😁😁😁😁😁😁😁"]
+            
+            let sub = desc[Int(arc4random_uniform(UInt32(desc.count - 1)))]
+            
+            Alert.show(.default(title:"测试",subTitle:Description(stringLiteral:"\(sub)"),operations:[Operation(stringLiteral:"确定").triggerHide(true),"取消"]), inView: view)
+
+        }else{
+            
+            Alert.show(.image(title:"测试图片",image:Image(named:"thumb"),operations:[Operation(stringLiteral:"确定").triggerHide(true)]), inView: view)
+
+        }
 
     }
     
@@ -73,7 +94,7 @@ extension MessageViewController{
             op.backgroundColor = .green
             op.cornerRadius = 10
             op.textColor = .white
-            op.triggerHideView(true)
+            op.triggerHide(true)
 //            op.action = {
 //                print("确定")
 //                Sheet.hide()
