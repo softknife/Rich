@@ -12,10 +12,6 @@ import YogaKit
 
 public class Background:UIView {
     
-    //    fileprivate var viewType : ViewType
-//    var contentView : BodyConfigure?
-    
-    
     
     
     public init(color:UIColor = .clear , layout:InitialLayout) {

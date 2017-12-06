@@ -11,15 +11,15 @@ import YogaKit
 
 public class Alert:Skeleton{
     
-    var type : RichType = .alert
+    var richType : RichType = .alert
     var state:State = .initial{
         didSet{
-            changeAccordingState()
+            changeViewLayoutAccordingState()
         }
     }
 
     weak var containerView:UIView?
-    var background : Background
+    public var background : Background
     var animation:Animation
     
     var content:Content
@@ -42,17 +42,12 @@ public class Alert:Skeleton{
         self.background = Background(color: .clear, layout: customLayout)
         
         
-        switch content.type {
-        case let .default(_,_, ops):
-            setDefaultOperation(ops: ops)
-        case let .image(_, _, ops):
-            setDefaultOperation(ops: ops)
-        }
 
     }
     
 }
 
+/// DistinguishAciton
 extension Alert{
     
     func configBody(){
@@ -62,8 +57,16 @@ extension Alert{
             return
         }
         
-      
+        // configura default action to decide to hide current view or not
+        switch content.type {
+        case let .default(_,_, ops):
+            setDefaultHideViewAction(ops)
+        case let .image(_, _, ops):
+            setDefaultHideViewAction(ops)
+        }
+
         
+        // yoga layout configuration
         let body = AlertBody( content: content)
         
         body.configureLayout { (layout) in
@@ -78,21 +81,10 @@ extension Alert{
         
     }
     
-    private func setDefaultOperation(ops:[Operation]){
-        
-        for op in ops {
-            if op.action == nil {
-                op.action =  {  [weak self] in
-                    guard let weakSelf = self else {return}
-                    weakSelf.hide()
-                }
-            }
-        }
 
-    }
     
     
-    func turnToShow(time:State.Repeat){
+    func turnToShow(time:State.AwakeStyle){
         
         containerView?.addSubview(background)
         background.yoga.applyLayout(preservingOrigin: true)

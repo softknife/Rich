@@ -23,14 +23,14 @@ public extension AdditionalConfiguration{
 
 }
 
-final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration{
+final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration,AutoTriggerHideActiveView{
+    
     
     public enum Value{
         case text(String)
         case image(UIImage)
     }
 
-    public typealias Action = ()->()
     
     var value:Value
     var textColor : UIColor = .gray
@@ -38,6 +38,9 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
     var backgroundColor:UIColor = .clear
     var action : Action? = nil
     var cornerRadius : CGFloat = 0
+    
+    var triggerHideView:Bool = false
+
     
     public init(value:Value,textColor:UIColor = .gray,font:UIFont = .systemFont(ofSize: 16),backgroundColor:UIColor = .clear , action:Action? = nil,cornerRadius:CGFloat = 0) {
         self.value = value
@@ -53,9 +56,16 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
     public required init(stringLiteral value: String) {
         self.value = .text(value)
     }
+    
+}
 
-    
-    
+extension Operation{
+    public func defaultHide(_ block:Action?) ->Self {
+        
+        
+        
+        return self
+    }
 }
 
 
@@ -72,6 +82,8 @@ final public class MarginOperation:ExpressibleByStringLiteral,AdditionalConfigur
     }
     
 }
+
+
 
 
 

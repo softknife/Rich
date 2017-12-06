@@ -32,7 +32,7 @@
 		91CBABED1FD19F320010F17A /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CBABE11FD19F320010F17A /* Background.swift */; };
 		91CBABEF1FD19F320010F17A /* Eraser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CBABE31FD19F320010F17A /* Eraser.swift */; };
 		91CBABF21FD19F320010F17A /* Rich.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CBABE61FD19F320010F17A /* Rich.swift */; };
-		91CBABF31FD19F320010F17A /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CBABE71FD19F320010F17A /* Enum.swift */; };
+		91CBABF31FD19F320010F17A /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CBABE71FD19F320010F17A /* Common.swift */; };
 		91CBABF41FD19F320010F17A /* CocoaLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CBABE81FD19F320010F17A /* CocoaLayout.swift */; };
 		91CBABF71FD19F3D0010F17A /* SingleLabelCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CBABF61FD19F3D0010F17A /* SingleLabelCollectionCell.swift */; };
 /* End PBXBuildFile section */
@@ -66,7 +66,7 @@
 		91CBABE11FD19F320010F17A /* Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		91CBABE31FD19F320010F17A /* Eraser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eraser.swift; sourceTree = "<group>"; };
 		91CBABE61FD19F320010F17A /* Rich.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rich.swift; sourceTree = "<group>"; };
-		91CBABE71FD19F320010F17A /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		91CBABE71FD19F320010F17A /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		91CBABE81FD19F320010F17A /* CocoaLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CocoaLayout.swift; sourceTree = "<group>"; };
 		91CBABF61FD19F3D0010F17A /* SingleLabelCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLabelCollectionCell.swift; sourceTree = "<group>"; };
 		EE8429DD04F97FECF395E2AD /* Pods-Rich.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rich.release.xcconfig"; path = "Pods/Target Support Files/Pods-Rich/Pods-Rich.release.xcconfig"; sourceTree = "<group>"; };
@@ -178,7 +178,7 @@
 				91CBABE11FD19F320010F17A /* Background.swift */,
 				91CBABE31FD19F320010F17A /* Eraser.swift */,
 				91CBABE61FD19F320010F17A /* Rich.swift */,
-				91CBABE71FD19F320010F17A /* Enum.swift */,
+				91CBABE71FD19F320010F17A /* Common.swift */,
 				91CBABE81FD19F320010F17A /* CocoaLayout.swift */,
 				911785C71FD6E430003CBDB0 /* Tools.swift */,
 			);
@@ -358,7 +358,7 @@
 				911F86251FD540EF00FA1A0C /* ImageView.swift in Sources */,
 				91CBABF21FD19F320010F17A /* Rich.swift in Sources */,
 				91CBABDA1FD19F250010F17A /* MessageViewController.swift in Sources */,
-				91CBABF31FD19F320010F17A /* Enum.swift in Sources */,
+				91CBABF31FD19F320010F17A /* Common.swift in Sources */,
 				91CBABD91FD19F250010F17A /* LayoutInclusionViewController.swift in Sources */,
 				911F86201FD53FEE00FA1A0C /* Button.swift in Sources */,
 				911785C81FD6E430003CBDB0 /* Tools.swift in Sources */,

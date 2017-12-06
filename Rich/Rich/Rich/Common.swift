@@ -8,6 +8,10 @@
 
 import Foundation
 
+
+////////////////////////////////////////////////////////////////////////////////
+// ENUM
+////////////////////////////////////////////////////////////////////////////////
 public enum Animation {
     case none
     case fadedIn
@@ -32,15 +36,16 @@ public enum RichType:Int,Equatable{
 
 public enum State:Equatable{
     
-    public enum Repeat:Int{
+    public enum AwakeStyle:Int{
         case first = 0
-        case again = 1
+        case turn2 = 1
+    
     }
     
     case initial
     case sleep
-    case awake(time:Repeat)
-    case refresh
+    case awake(time:AwakeStyle)
+    case refresh(Background)
     case dying(finished:((Bool)->())?)
     
     private func value()->String{
@@ -57,3 +62,11 @@ public enum State:Equatable{
         return lhs.value() == rhs.value()
     }
 }
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// TypeAlias
+////////////////////////////////////////////////////////////////////////////////
+public typealias Action = ()->()
+

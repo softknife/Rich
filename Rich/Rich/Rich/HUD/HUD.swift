@@ -11,14 +11,14 @@ import YogaKit
 
 public class HUD:Skeleton{
     
-    var type : RichType = .hud
+    var richType : RichType = .hud
     var state:State = .initial{
         didSet{
-            changeAccordingState()
+            changeViewLayoutAccordingState()
         }
     }
     weak var containerView:UIView?
-    var background : Background
+    public var background : Background
     var animation:Animation
     
     var content:Content
@@ -69,24 +69,26 @@ extension HUD{
 
     }
 
-    func refreshBody(){
+    func refreshBody(newBackground:Background){
      
-        containerView?.subviews.forEach{$0.removeFromSuperview()}
+
+        background.removeFromSuperview()
+        background = newBackground
         configBody()
         
         
-        if state == .awake(time: .first) || state == .awake(time: .again){
+        if state == .awake(time: .first) || state == .awake(time: .turn2){
             containerView?.addSubview(background)
             background.yoga.applyLayout(preservingOrigin: true)
         }
     }
     
-    func turnToShow(time:State.Repeat){
+    func turnToShow(time:State.AwakeStyle){
         
         containerView?.addSubview(background)
         background.yoga.applyLayout(preservingOrigin: true)
         
-        if time == .first{
+        if case State.AwakeStyle.first = time{
             background.alpha = 0
             UIView.animate(withDuration: 1) {
                 self.background.alpha = 1

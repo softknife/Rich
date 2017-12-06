@@ -11,15 +11,15 @@ import YogaKit
 
 public class Sheet:Skeleton{
 
-    var type : RichType = .sheet
+    var richType : RichType = .sheet
     var state:State = .initial{
         didSet{
-            changeAccordingState()
+            changeViewLayoutAccordingState()
         }
     }
 
     weak  var containerView:UIView?
-    var background : Background
+    public var background : Background
     var animation:Animation
     
     var content:Content
@@ -58,6 +58,18 @@ extension Sheet{
             return
         }
 
+        // configura default action to decide to hide current view or not
+        switch content.type {
+        case let .system(items, others):
+            
+            var ops = items
+            if let others = others {
+                ops += others.map{ $0.operation }
+            }
+            setDefaultHideViewAction(ops)
+        }
+        
+        // Yoga layout configuration
         let body = SheetBody(content: content)
 
         body.configureLayout { (layout) in
@@ -74,7 +86,7 @@ extension Sheet{
     }
 
 
-    func turnToShow(time:State.Repeat){
+    func turnToShow(time:State.AwakeStyle){
 
         guard let container = containerView else {
             Rich.remove(self)
@@ -84,10 +96,14 @@ extension Sheet{
         container.addSubview(background)
         background.yoga.applyLayout(preservingOrigin: true)
 
-        background.body!.transform = CGAffineTransform(translationX: 0, y: background.body!.bounds.height)
-        UIView.animate(withDuration: 1, animations: {
-            self.background.body!.transform = CGAffineTransform.identity
-        })
+        if case State.AwakeStyle.first = time {
+            
+            background.body!.transform = CGAffineTransform(translationX: 0, y: background.body!.bounds.height)
+            UIView.animate(withDuration: 1, animations: {
+                self.background.body!.transform = CGAffineTransform.identity
+            })
+        }
+        
     }
 
     func turnToHide( finished:((Bool)->())?){
@@ -95,6 +111,7 @@ extension Sheet{
         UIView.animate(withDuration: 1, animations: {
             self.background.body!.transform = CGAffineTransform(translationX: 0, y: self.background.body!.bounds.height)
         }) { (finish) in
+            
             self.background.removeFromSuperview()
             finished?(finish)
         }

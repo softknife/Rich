@@ -24,7 +24,11 @@ extension MessageViewController{
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         
-        testActionSheet()
+        if arc4random_uniform(10) % 2 == 0 {
+            testActionSheet()
+        }else{
+            testAlert()
+        }
         
 //        if arc4random_uniform(10) % 2 == 0 {
 //
@@ -37,10 +41,7 @@ extension MessageViewController{
 //
 //        }else{
         
-//        Alert.show(.image(title:"测试图片",image:Image(named:"thumb"),operations:["确定"]), inView: view)
         
-//            Alert.show(.default(title:"测试",subTitle:"测试点什么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点测试点什么?测试点什么?么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点测试点什么?测试点什么?什么?测试点测试点什么?测试点什么?",operation1:"确定",operation2:"取消"), inView: view)
-            
 
 //        }
         
@@ -48,7 +49,22 @@ extension MessageViewController{
         
     }
     
-    func testActionSheet()  {
+    private func testAlert(){
+        
+//        Alert.show(.image(title:"测试图片",image:Image(named:"thumb"),operations:["确定"]), inView: view)
+        
+        let desc = ["点什么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点",
+                    "点什么?测试点什么?试 🛰大大大",
+                    "试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测",
+                    "😁😁😁😁😁😁😁😁"]
+        
+        let sub = desc[Int(arc4random_uniform(UInt32(desc.count - 1)))]
+        
+        Alert.show(.default(title:"测试",subTitle:Description(stringLiteral:"\(sub)"),operations:[Operation(stringLiteral:"确定").triggerHideView(true),"取消"]), inView: view)
+
+    }
+    
+    private func testActionSheet()  {
    
         
         let confirm = MarginOperation(stringLiteral:"确定").plus { (mo) in
@@ -57,10 +73,11 @@ extension MessageViewController{
             op.backgroundColor = .green
             op.cornerRadius = 10
             op.textColor = .white
-            op.action = {
-                print("确定")
-                Sheet.hide()
-            }
+            op.triggerHideView(true)
+//            op.action = {
+//                print("确定")
+//                Sheet.hide()
+//            }
 
         }
         

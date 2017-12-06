@@ -13,28 +13,33 @@ import YogaKit
 ///////////////////////////////////////////////////////////////////////////////////////////
 // HUD,AlertView & ActionSheet Configuration Protocol
 ///////////////////////////////////////////////////////////////////////////////////////////
+
+
+/// Internal Protocol
 typealias Skeleton = CommonConfigure & DistinguishAction & CommonAction
 
 
 
-protocol BaseConfigure:class  {
+/// Base Configuration
+protocol BaseConfigure: OpenConfigure  {
     
     weak var containerView : UIView? {get set}
-    var background:Background {get set}
     var animation:Animation {get set}
-    var type : RichType{get set}
+    var richType : RichType{get set}
     var state:State {get set}
 
 }
 
 
-
+/// AssociatedType1
 protocol ContentBindable {
     associatedtype ContentType
     var type : ContentType{get set}
     
 }
 
+
+/// AssociatedType2
 protocol CommonConfigure:BaseConfigure{
     
 
@@ -49,51 +54,71 @@ protocol CommonConfigure:BaseConfigure{
 protocol DistinguishAction {
     
     
+    /// Configure Yoga Layout and other necessary configuration
+    ///
     func configBody()
-    func refreshBody()
     
+    
+    /// This method is specially for HUD
+    ///
+    /// - Parameter : newBackground
+    func refreshBody(_ newBackground:Background)
+    
+    
+    /// We hidden current view temporarily  when other high level type view show
+    ///
     func goToSleep()
-    func turnToShow(time:State.Repeat)
+    
+    
+    /// Show current view to user
+    ///
+    /// - Parameter time: first show or not
+    func turnToShow(time:State.AwakeStyle)
+    
+    
+    /// Make current view remove from superView
+    ///
+    /// - Parameter finished: finish callback
     func turnToHide(finished:((Bool)->())?)
 }
 
 extension DistinguishAction where Self:CommonConfigure{
     
+    
     func goToSleep(){
         background.removeFromSuperview()
     }
     
-    func refreshBody(){}
+    
+    func refreshBody(_ newBackground:Background){}
 }
 
 
 protocol CommonAction {
+    
+    
+    /// Prepare some basic configuration for the node  ,such as hold current node , before really show its view
     func prepare()
-    func changeAccordingState()
+    
+    
+    /// To Adjust View'layout according to state
+    func changeViewLayoutAccordingState()
+    
+    
+    /// Hidden current view , and then , decide to show next view or not
+    ///
+    /// - Parameter showNext: show next view or not
     func hide(showNext:Bool)
+    
+
+    /// If operation'action property is nil, we give it default action to hidden current view
+    ///
+    /// - Parameter ops: Operation Array
+    func setDefaultHideViewAction(_ ops:[Operation])
+    
 }
 
 extension CommonAction where Self:CommonConfigure & DistinguishAction{
-    
-    func changeAccordingState()  {
-        
-        switch state {
-        case .initial: break
-        case .sleep: goToSleep()
-        case .awake(let time):
-            
-            if time == .first{
-                configBody()
-            }
-            turnToShow(time: time)
-            
-        case .refresh: refreshBody()
-        case .dying(let finished):
-            turnToHide(finished:finished)
-            Rich.remove(self)
-
-        }
-    }
     
     
     
@@ -107,14 +132,13 @@ extension CommonAction where Self:CommonConfigure & DistinguishAction{
         }
         
         
-        let specificNodes = Rich.getNodes(type: type)
+        let specificNodes = Rich.getNodes(type: richType)
         if specificNodes.isEmpty {
             
-            switch type {
+            switch richType {
             case .alert,.sheet:
 
                 nodes.forEach{$0.state = .sleep}
-                
                 state = .awake(time: .first)
                 Rich.add(self)
 
@@ -123,22 +147,20 @@ extension CommonAction where Self:CommonConfigure & DistinguishAction{
             }
             
             return
-            
-            
         }
 
         
-        switch type {
+        switch richType {
         case .hud:
             
             let oldNode = specificNodes.first!
-            oldNode.background = background
-            oldNode.state = .refresh
+            oldNode.state = .refresh(background)
             
         case .alert,.sheet:
             
+            Rich.activeNode()?.state = .sleep
             Rich.add(self)
-            configBody()
+            state = .awake(time: .first)
 
         }
         
@@ -159,7 +181,7 @@ extension CommonAction where Self:CommonConfigure & DistinguishAction{
             case .initial:
                 next.state = .awake(time: .first)
             case .sleep:
-                next.state = .awake(time: .again)
+                next.state = .awake(time: .turn2)
             default:
                 break
             }
@@ -168,7 +190,39 @@ extension CommonAction where Self:CommonConfigure & DistinguishAction{
 
 
     }
-  
+
+    func changeViewLayoutAccordingState()  {
+        
+        switch state {
+        case .initial: break
+        case .sleep: goToSleep()
+        case .awake(let time):
+            
+            if time == .first{
+                configBody()
+            }
+            turnToShow(time: time)
+            
+        case .refresh(let newBackground): refreshBody(newBackground)
+        case .dying(let finished):
+            turnToHide(finished:finished)
+            Rich.remove(self)
+            
+        }
+    }
+    
+    func setDefaultHideViewAction(_ ops:[Operation]){
+        for op in ops {
+            if op.action == nil && op.triggerHideView{
+                op.action =  {  [weak self] in
+                    guard let weakSelf = self else {return}
+                    weakSelf.hide(showNext: true)
+                }
+            }
+        }
+
+    }
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -191,8 +245,39 @@ protocol BodyConfigure  {
 //    
 //}
 
+//////////////////////////////////////////////////////////////////////////////////////////
+//// ActionDefaultTriggerHideView  protocol
+//////////////////////////////////////////////////////////////////////////////////////////
+protocol AutoTriggerHideActiveView:class{
+    
+    
+    /// Decide to hide active view or not when associated action is triggered
+    var triggerHideView:Bool {get set}
+    @discardableResult
+    func triggerHideView(_ hide:Bool) -> Self
+}
+
+extension AutoTriggerHideActiveView{
+    
+    @discardableResult
+    func triggerHideView(_ hide:Bool) -> Self{
+        triggerHideView = hide
+        return self
+    }
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Expose to Users directly
 //////////////////////////////////////////////////////////////////////////////////////////
+/// Public Protocol
+public protocol OpenConfigure:class{
+    var background:Background {get set}
+    
+}
+
+
+
+
 

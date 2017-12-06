@@ -49,15 +49,15 @@ extension Rich{
     }
     
     internal static func  getNodes(type:RichType) -> [Node]{
-        return Rich.shared.nodes.filter{$0.type == type}
+        return Rich.shared.nodes.filter{$0.richType == type}
     }
     
     internal static func activeNodeType()->RichType?{
-        return activeNode()?.type
+        return activeNode()?.richType
     }
     
     internal static func activeNode()->Node?{
-        return Rich.shared.nodes.filter{($0.state == .awake(time:.first)) || ($0.state == .awake(time:.again))}.first
+        return Rich.shared.nodes.filter{($0.state == .awake(time:.first)) || ($0.state == .awake(time:.turn2))}.first
     }
     
     internal static func nextWillShow(from base:Node) ->Node?{
