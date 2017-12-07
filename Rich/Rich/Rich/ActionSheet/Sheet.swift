@@ -55,12 +55,11 @@ extension Sheet{
 
         // configura default action to decide to hide current view or not
         switch content.type {
-        case let .system(items, others):
+        case let .system(_, others):
             
-            var ops = items
-            if let others = others {
-                ops += others.map{ $0.operation }
-            }
+            guard let others = others else {break}
+            let ops = others.map{ $0.operation }
+
             setDefaultHideViewAction(ops)
         case .delay:break
 
@@ -142,10 +141,13 @@ extension Sheet {
 
 extension Sheet.Content {
     @discardableResult
-    func defaultConfiguration() ->Sheet.Content{
+    public func defaultConfiguration() ->Sheet.Content{
         
         switch type {
         case let .system(items, others):
+            
+            
+            
             break
         case .delay: break
         }

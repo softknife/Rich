@@ -97,7 +97,14 @@ extension MessageViewController{
         }else{
             
             Alert.show(.delay, inView: view){ alert in
-                alert.refreshContent(.image(title:"测试图片",image:Image(named:"thumb"),operations:[Operation(stringLiteral:"确定").triggerHide(true)]))
+                
+                let content = Alert.Content.image(
+                            title:"测试图片",
+                            image:Image(named:"thumb"),
+                            operations:[Operation(stringLiteral:"确定").triggerHide(true)]
+                                                  ).defaultConfiguration()
+                
+                alert.refreshContent(content)
                 
             }
 

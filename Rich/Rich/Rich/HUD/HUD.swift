@@ -167,7 +167,7 @@ extension HUD {
 extension HUD.Content {
     
     @discardableResult
-    func defaultConfiguration() ->HUD.Content {
+    public func defaultConfiguration() ->HUD.Content {
         switch type {
         case .systemActivity:break
         case .success(let description): break

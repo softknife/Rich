@@ -124,7 +124,7 @@ extension Alert {
 
 extension Alert.Content {
     @discardableResult
-    func defaultConfiguration() ->Alert.Content{
+    public func defaultConfiguration() ->Alert.Content{
         
         switch type {
         case let .default(title, subTitle, operations):
