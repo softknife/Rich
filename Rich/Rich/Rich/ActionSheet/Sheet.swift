@@ -9,7 +9,7 @@
 import UIKit
 import YogaKit
 
-public class Sheet:Skeleton{
+public final class Sheet:Skeleton{
 
     var richType : RichType = .sheet
     var state:State = .initial{

@@ -9,7 +9,7 @@
 import UIKit
 import YogaKit
 
-public class Alert:Skeleton{
+public final class Alert:Skeleton{
     
     var richType : RichType = .alert
     var state:State = .initial{

@@ -49,13 +49,23 @@ extension MessageViewController{
         if arc4random_uniform(10) % 2 == 0 {
             let ad = HUD.show( .success(description: "成功"), inView: view)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                
                 ad.hide()
             }
 
         }else{
             HUD.show( .systemActivity, inView: view)
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
-                HUD.hide()
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
+                
+                HUD.show( .success(description: "成功"), inView: self.view)
+                
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                    
+                    HUD.hide()
+                    
+                }
+
             })
         }
 

@@ -15,6 +15,8 @@ internal class Rich {
     
     internal static let shared = Rich()
     
+    internal let queue = DispatchQueue.global()
+    
     private var nodes = [Node]()
     
     private init(){

@@ -28,6 +28,8 @@ protocol BaseConfigure: OpenConfigure  {
     var richType : RichType{get set}
     var state:State {get set}
 
+    
+
 }
 
 
@@ -48,6 +50,13 @@ protocol CommonConfigure:BaseConfigure{
     
     init(content:Content, container:UIView,yoga:YGLayoutConfigurationBlock?,animation:Animation)
     
+    @discardableResult
+    func diffChange(from node:Self) -> Self
+}
+
+extension CommonConfigure {
+    @discardableResult
+    func diffChange(from node:Self) -> Self{return self}
 }
 
 
@@ -58,11 +67,6 @@ protocol DistinguishAction {
     ///
     func configBody()
     
-    
-    /// This method is specially for HUD
-    ///
-    /// - Parameter : newBackground
-    func refreshBody(_ newBackground:Background)
     
     
     /// We hidden current view temporarily  when other high level type view show
@@ -80,9 +84,11 @@ protocol DistinguishAction {
     ///
     /// - Parameter finished: finish callback
     func turnToHide(finished:((Bool)->())?)
+    
+    
 }
 
-extension DistinguishAction where Self:CommonConfigure{
+extension DistinguishAction where Self:BaseConfigure{
     
     
     func goToSleep(){
@@ -90,7 +96,8 @@ extension DistinguishAction where Self:CommonConfigure{
     }
     
     
-    func refreshBody(_ newBackground:Background){}
+    
+  
 }
 
 
@@ -124,69 +131,99 @@ extension CommonAction where Self:CommonConfigure & DistinguishAction{
     
     func prepare(){
 
-        let nodes = Rich.getNodes()
-        if nodes.isEmpty {
-            Rich.add(self)
-            state = .awake(time: .first)
-            return
-        }
+//        objc_sync_enter(Rich.shared)
         
-        
-        let specificNodes = Rich.getNodes(type: richType)
-        if specificNodes.isEmpty {
+        Rich.shared.queue.sync {
             
-            switch richType {
-            case .alert,.sheet:
-
-                nodes.forEach{$0.state = .sleep}
+            let nodes = Rich.getNodes()
+            if nodes.isEmpty {
+                Rich.add(self)
                 state = .awake(time: .first)
-                Rich.add(self)
-
-            case .hud:
-                Rich.add(self)
+                return
             }
             
-            return
-        }
+            
+            let specificNodes = Rich.getNodes(type: richType)
+            if specificNodes.isEmpty {
+                
+                nodes.forEach{$0.state = .sleep}
+                Rich.add(self)
+                state = .awake(time: .first)
+                
+                //            switch richType {
+                //            case .alert,.sheet:
+                //
+                //                nodes.forEach{$0.state = .sleep}
+                //                state = .awake(time: .first)
+                //                Rich.add(self)
+                //
+                //            case .hud:
+                //                Rich.add(self)
+                //            }
+                
+                return
+            }
+            
+            
+            switch richType {
+            case .hud:
+                
+                let oldNode = specificNodes.first!
+                (oldNode as! HUD).diffChange(from: self as! HUD)
+                
+                switch oldNode.state{
+                case .awake(_): break
+                case .sleep:
+                    Rich.activeNode()?.state = .sleep
+                    oldNode.state = .awake(time: .turn2)
+                default: break
+                }
+                
+            case .alert,.sheet:
+                
+                Rich.activeNode()?.state = .sleep
+                Rich.add(self)
+                state = .awake(time: .first)
+                
+            }
 
-        
-        switch richType {
-        case .hud:
-            
-            let oldNode = specificNodes.first!
-            oldNode.state = .refresh(background)
-            
-        case .alert,.sheet:
-            
-            Rich.activeNode()?.state = .sleep
-            Rich.add(self)
-            state = .awake(time: .first)
-
         }
         
+//        objc_sync_exit(Rich.shared)
+
         
     }
     
     
     func hide(showNext:Bool) {
         
-        guard let next = Rich.nextWillShow(from: self) else {
-            state = .dying(finished:nil)
-            return
-        }
-        
-        state = .dying(finished: { (_) in
+        Rich.shared.queue.sync {
             
-            switch next.state {
-            case .initial:
-                next.state = .awake(time: .first)
-            case .sleep:
-                next.state = .awake(time: .turn2)
-            default:
-                break
+            guard case State.awake(_) = state else {
+                return
             }
+            
+            guard let next = Rich.nextWillShow(from: self) else {
+                state = .dying(finished:nil)
+                return
+            }
+            
+            state = .dying(finished: { (_) in
+                
+                switch next.state {
+                case .initial:
+                    next.state = .awake(time: .first)
+                    
+                case .sleep:
+                    next.state = .awake(time: .turn2)
+                    
+                default:
+                    break
+                }
+                
+            })
 
-        })
+        }
 
 
     }
@@ -203,7 +240,6 @@ extension CommonAction where Self:CommonConfigure & DistinguishAction{
             }
             turnToShow(time: time)
             
-        case .refresh(let newBackground): refreshBody(newBackground)
         case .dying(let finished):
             turnToHide(finished:finished)
             Rich.remove(self)

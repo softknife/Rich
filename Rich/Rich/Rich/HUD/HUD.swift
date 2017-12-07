@@ -9,7 +9,7 @@
 import UIKit
 import YogaKit
 
-public class HUD:Skeleton{
+public final class HUD:Skeleton{
     
     var richType : RichType = .hud
     var state:State = .initial{
@@ -69,19 +69,6 @@ extension HUD{
 
     }
 
-    func refreshBody(newBackground:Background){
-     
-
-        background.removeFromSuperview()
-        background = newBackground
-        configBody()
-        
-        
-        if state == .awake(time: .first) || state == .awake(time: .turn2){
-            containerView?.addSubview(background)
-            background.yoga.applyLayout(preservingOrigin: true)
-        }
-    }
     
     func turnToShow(time:State.AwakeStyle){
         
@@ -98,7 +85,6 @@ extension HUD{
     }
     
     
-    
     func turnToHide(finished:((Bool)->())?){
         
         UIView.animate(withDuration: 1, animations: {
@@ -110,7 +96,23 @@ extension HUD{
         
     }
     
-
+    @discardableResult
+    func diffChange(from node:HUD) ->HUD {
+        
+        let isAwake = background.superview != nil ? true : false
+        background.removeFromSuperview()
+        background = node.background
+        content = node.content
+        configBody()
+        
+        
+        if isAwake{
+            state = .awake(time: .turn2)
+        }
+        
+        return self
+        
+    }
     
     
 }

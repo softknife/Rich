@@ -59,14 +59,6 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
     
 }
 
-extension Operation{
-    public func defaultHide(_ block:Action?) ->Self {
-        
-        
-        
-        return self
-    }
-}
 
 
 final public class MarginOperation:ExpressibleByStringLiteral,AdditionalConfiguration {

@@ -45,7 +45,7 @@ public enum State:Equatable{
     case initial
     case sleep
     case awake(time:AwakeStyle)
-    case refresh(Background)
+//    case refresh(Background)
     case dying(finished:((Bool)->())?)
     
     private func value()->String{
@@ -53,7 +53,7 @@ public enum State:Equatable{
         case .initial:return "initial"
         case .sleep: return "sleep"
         case .awake(let time): return "awake\(time.rawValue)"
-        case .refresh:return "refresh"
+//        case .refresh:return "refresh"
         case .dying: return "dying"
         }
     }
