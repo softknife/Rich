@@ -55,6 +55,7 @@ extension Alert{
             setDefaultHideViewAction(ops)
         case let .image(_, _, ops):
             setDefaultHideViewAction(ops)
+        case .delay:break
         }
 
         
@@ -100,6 +101,8 @@ extension Alert {
     public struct Content:ContentBindable{
         var type:ContentType
         
+        public static var delay : Content {return Content(type: .delay)}
+
         public static func `default`(title:Description? = nil ,subTitle:Description? = nil,operations:[Operation])->Content{
             return Content(type: .default(title:title,subTitle:subTitle,operations:operations))
         }
@@ -111,6 +114,7 @@ extension Alert {
     
     
     enum ContentType{
+        case delay
         case `default`(title:Description?,subTitle:Description?,operations:[Operation])
         case image(title:Description?,image:Image?,operations:[Operation])
 
@@ -126,6 +130,7 @@ extension Alert.Content {
             break
 
         case let .image(title, image, operations): break
+        case .delay: break
         }
         
         return self

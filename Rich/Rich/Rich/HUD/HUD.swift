@@ -115,6 +115,8 @@ extension HUD {
     public struct Content:ContentBindable {
         var type: ContentType
         
+        public static var delay : Content {return Content(type: .delay)}
+        
         public static var systemActivity:Content{
             return Content(type: .systemActivity)
         }
@@ -150,6 +152,7 @@ extension HUD {
     
     internal enum ContentType  {
         
+        case delay
         case systemActivity
         case success(description:Description?)
         case failure(description:Description?)
@@ -172,7 +175,8 @@ extension HUD.Content {
         case let  .titleThenImage(title, image): break
         case let .imageThenName(image, name): break
         case .progress(let progress): break
-            
+        case .delay: break
+
          
         }
         return self

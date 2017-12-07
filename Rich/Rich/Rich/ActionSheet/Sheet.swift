@@ -62,6 +62,8 @@ extension Sheet{
                 ops += others.map{ $0.operation }
             }
             setDefaultHideViewAction(ops)
+        case .delay:break
+
         }
         
         // Yoga layout configuration
@@ -122,6 +124,8 @@ extension Sheet {
 
         var type:ContentType
 
+        public static var delay : Content {return Content(type: .delay)}
+
         public static func system(items:[Operation],others:[MarginOperation]? = nil) ->Content {
             return Content(type: .system(items: items, others: others))
         }
@@ -129,6 +133,7 @@ extension Sheet {
     }
 
     enum ContentType{
+        case delay
         case system(items:[Operation],others:[MarginOperation]?)
     }
 
@@ -142,6 +147,7 @@ extension Sheet.Content {
         switch type {
         case let .system(items, others):
             break
+        case .delay: break
         }
         
         return self

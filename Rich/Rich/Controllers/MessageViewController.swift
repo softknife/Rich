@@ -89,13 +89,17 @@ extension MessageViewController{
             
             let sub = desc[Int(arc4random_uniform(UInt32(desc.count - 1)))]
             
-            Alert.show(.default(title:"测试",subTitle:Description(stringLiteral:"\(sub)"),operations:[Operation(stringLiteral:"确定").triggerHide(true),"取消"]), inView: view){ alert in
+            Alert.show(.delay, inView: view){ alert in
                 alert.background.backgroundColor = .blue
+                alert.refreshContent(.default(title:"测试",subTitle:Description(stringLiteral:"\(sub)"),operations:[Operation(stringLiteral:"确定").triggerHide(true),"取消"]))
             }
 
         }else{
             
-            Alert.show(.image(title:"测试图片",image:Image(named:"thumb"),operations:[Operation(stringLiteral:"确定").triggerHide(true)]), inView: view)
+            Alert.show(.delay, inView: view){ alert in
+                alert.refreshContent(.image(title:"测试图片",image:Image(named:"thumb"),operations:[Operation(stringLiteral:"确定").triggerHide(true)]))
+                
+            }
 
         }
 

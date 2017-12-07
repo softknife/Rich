@@ -85,7 +85,8 @@ extension HUDBody {
             configImage(image,marginTop: 5)
 
             configTitle(name,marginTop: 10,marginBottom: 10)
-            
+        case .delay:break
+
 
         }
         

@@ -66,6 +66,8 @@ extension AlertBody {
             
             // operation view
             configOperationView(ops)
+        case .delay:break
+
         }
     }
     
