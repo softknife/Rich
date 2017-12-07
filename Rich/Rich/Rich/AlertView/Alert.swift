@@ -31,7 +31,8 @@ public final class Alert:Skeleton{
 
         self.containerView = container
         
-        self.background = Background(color: .clear, layout: .default(container))
+        
+        self.background = Background(color: UIColor(type:.transparentGray), layout: .default(container))
         
         
 

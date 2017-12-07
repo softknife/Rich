@@ -39,7 +39,7 @@ public final class Sheet:Skeleton{
                 layout.height = YGValue(container.frame.size.height)
             })
 
-        self.background = Background(color: .clear, layout: customLayout)
+        self.background = Background(color: UIColor(type:.transparentGray), layout: customLayout)
 
     }
 }

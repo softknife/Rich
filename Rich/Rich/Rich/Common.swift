@@ -6,7 +6,31 @@
 //  Copyright © 2017年 Eric. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+
+extension UIColor {
+    
+    enum Color {
+        case transparentGray
+        
+        func value() -> (CGFloat,CGFloat,CGFloat,CGFloat) {
+            switch self {
+            case .transparentGray:
+                return ( 240/250, 240/250, 240/250,  0.7)
+                
+            }
+        }
+    }
+    
+
+    convenience init(type:Color) {
+        
+        let value = type.value()
+        self.init(red: value.0, green: value.1, blue: value.2, alpha: value.3)
+    }
+    
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////

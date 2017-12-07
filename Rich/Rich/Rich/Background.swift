@@ -14,7 +14,7 @@ public class Background:UIView {
     
     
     
-    public init(color:UIColor = .clear , layout:InitialLayout) {
+    public init(color:UIColor , layout:InitialLayout) {
         
         super.init(frame: .zero)
         //        self.viewType = viewType
