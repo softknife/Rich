@@ -19,25 +19,17 @@ public final class HUD:Skeleton{
     }
     weak var containerView:UIView?
     public var background : Background
-    var animation:Animation
+    public var animation:Animation = .fadedIn
     
     var content:Content
     
     
-    required public init(content:Content, container:UIView,yoga:YGLayoutConfigurationBlock?,animation:Animation){
+    required public init(content:Content, container:UIView){
         
-        self.content = content
+        self.content = content.defaultConfiguration()
         self.containerView = container
-        self.animation = animation
         
-        let customLayout:Background.InitialLayout
-        if let yoga = yoga {
-            customLayout = .custom(yoga)
-        }else{
-            customLayout = .default(container)
-        }
-        
-        self.background = Background(color: .clear, layout: customLayout)
+        self.background = Background(color: .clear, layout: .default(container))
         
     }
     
@@ -169,13 +161,36 @@ extension HUD {
     }
 }
 
+extension HUD.Content {
+    
+    @discardableResult
+    func defaultConfiguration() ->HUD.Content {
+        switch type {
+        case .systemActivity:break
+        case .success(let description): break
+        case .failure(let description): break
+        case let  .titleThenImage(title, image): break
+        case let .imageThenName(image, name): break
+        case .progress(let progress): break
+            
+         
+        }
+        return self
+    }
+}
 
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// Public API
+/////////////////////////////////////////////////////////////////////////////////////
 extension HUD {
     
     @discardableResult
-    public static func show(_ content:HUD.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil,animation:Animation = .fadedIn)->HUD{
+    public static func show(_ content:HUD.Content, inView container:UIView ,configure: ((HUD)->())? = nil)->HUD{
         
-        let hud =  HUD(content:content,container:container,yoga:yoga,animation:animation)
+        let hud =  HUD(content:content,container:container)
+        if let config = configure { config(hud)}
         hud.prepare()
         
         return hud
@@ -194,6 +209,16 @@ extension HUD {
 
     }
     
+    
+}
+
+extension HUD {
+ 
+    @discardableResult
+    public func refreshContent(_ content:Content) ->HUD{
+        self.content = content
+        return self
+    }
 
 }
 

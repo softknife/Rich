@@ -8,20 +8,7 @@
 
 import UIKit
 
-public protocol AdditionalConfiguration:class {
-    
-    @discardableResult
-    func plus(_ additional: (Self)->()) ->Self
-}
-public extension AdditionalConfiguration{
-    
-    @discardableResult
-    func plus(_ additional: (Self)->()) ->Self{
-        additional(self)
-        return self
-    }
 
-}
 
 final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration,AutoTriggerHideActiveView{
     

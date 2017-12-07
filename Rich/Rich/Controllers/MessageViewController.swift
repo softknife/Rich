@@ -47,14 +47,18 @@ extension MessageViewController{
     private func testHUD() {
         
         if arc4random_uniform(10) % 2 == 0 {
-            let ad = HUD.show( .success(description: "成功"), inView: view)
+            let ad = HUD.show( .success(description: "成功"), inView: view, configure: { hud in
+                    hud.background.backgroundColor = .green
+            })
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
                 
                 ad.hide()
             }
 
         }else{
-            HUD.show( .systemActivity, inView: view)
+            HUD.show( .systemActivity, inView: view){hud in
+                hud.background.backgroundColor = .purple
+            }
             
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
                 
@@ -85,7 +89,9 @@ extension MessageViewController{
             
             let sub = desc[Int(arc4random_uniform(UInt32(desc.count - 1)))]
             
-            Alert.show(.default(title:"测试",subTitle:Description(stringLiteral:"\(sub)"),operations:[Operation(stringLiteral:"确定").triggerHide(true),"取消"]), inView: view)
+            Alert.show(.default(title:"测试",subTitle:Description(stringLiteral:"\(sub)"),operations:[Operation(stringLiteral:"确定").triggerHide(true),"取消"]), inView: view){ alert in
+                alert.background.backgroundColor = .blue
+            }
 
         }else{
             

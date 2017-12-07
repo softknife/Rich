@@ -24,7 +24,6 @@ typealias Skeleton = CommonConfigure & DistinguishAction & CommonAction
 protocol BaseConfigure: OpenConfigure  {
     
     weak var containerView : UIView? {get set}
-    var animation:Animation {get set}
     var richType : RichType{get set}
     var state:State {get set}
 
@@ -48,15 +47,18 @@ protocol CommonConfigure:BaseConfigure{
     associatedtype Content where Content: ContentBindable
     var content:Content{get set}
     
-    init(content:Content, container:UIView,yoga:YGLayoutConfigurationBlock?,animation:Animation)
+    init(content:Content, container:UIView)
     
     @discardableResult
     func diffChange(from node:Self) -> Self
+    
+    
 }
 
 extension CommonConfigure {
     @discardableResult
     func diffChange(from node:Self) -> Self{return self}
+
 }
 
 
@@ -310,10 +312,25 @@ extension AutoTriggerHideActiveView{
 /// Public Protocol
 public protocol OpenConfigure:class{
     var background:Background {get set}
+    var animation:Animation {get set}
     
 }
 
 
 
+public protocol AdditionalConfiguration:class {
+    
+    @discardableResult
+    func plus(_ additional: (Self)->()) ->Self
+}
+public extension AdditionalConfiguration{
+    
+    @discardableResult
+    func plus(_ additional: (Self)->()) ->Self{
+        additional(self)
+        return self
+    }
+    
+}
 
 

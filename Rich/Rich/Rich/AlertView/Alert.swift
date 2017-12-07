@@ -20,26 +20,18 @@ public final class Alert:Skeleton{
 
     weak var containerView:UIView?
     public var background : Background
-    var animation:Animation
+    public var animation:Animation = .fadedIn
     
     var content:Content
     
     
-    required public init(content:Content, container:UIView,yoga:YGLayoutConfigurationBlock?,animation:Animation){
+    required public init(content:Content, container:UIView){
         
-        self.content = content
+        self.content = content.defaultConfiguration()
 
         self.containerView = container
-        self.animation = animation
         
-        let customLayout:Background.InitialLayout
-        if let yoga = yoga {
-            customLayout = .custom(yoga)
-        }else{
-            customLayout = .default(container)
-        }
-        
-        self.background = Background(color: .clear, layout: customLayout)
+        self.background = Background(color: .clear, layout: .default(container))
         
         
 
@@ -125,11 +117,31 @@ extension Alert {
     }
 }
 
+extension Alert.Content {
+    @discardableResult
+    func defaultConfiguration() ->Alert.Content{
+        
+        switch type {
+        case let .default(title, subTitle, operations):
+            break
+
+        case let .image(title, image, operations): break
+        }
+        
+        return self
+    }
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// Public API
+/////////////////////////////////////////////////////////////////////////////////////
 extension Alert {
  
     @discardableResult
-    public static func show(_ content:Alert.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil ,animation:Animation = .fadedIn)->Alert{
-        let alert =  Alert(content:content,container:container,yoga:yoga,animation:animation)
+    public static func show(_ content:Alert.Content, inView container:UIView ,configure: ((Alert)->())?  = nil)->Alert{
+        let alert =  Alert(content:content,container:container)
+        if let config = configure {config(alert)}
         alert.prepare()
         return alert
     }
@@ -145,6 +157,16 @@ extension Alert {
         
     }
 
+
+}
+
+extension Alert {
+    
+    @discardableResult
+    public func refreshContent(_ content:Content) ->Alert{
+        self.content = content
+        return self
+    }
 
 }
 

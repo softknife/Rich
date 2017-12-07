@@ -20,29 +20,24 @@ public final class Sheet:Skeleton{
 
     weak  var containerView:UIView?
     public var background : Background
-    var animation:Animation
+    public var animation:Animation = .fadedIn
     
     var content:Content
 
 
-    required public init(content:Content, container:UIView,yoga:YGLayoutConfigurationBlock?,animation:Animation){
+    required public init(content:Content, container:UIView){
 
-        self.content = content
+        self.content = content.defaultConfiguration()
         self.containerView = container
-        self.animation = animation
 
-        let customLayout:Background.InitialLayout
-        if let yoga = yoga {
-            customLayout = .custom(yoga)
-        }else{
-            customLayout = .custom({ [unowned container] (layout) in
+        let customLayout:Background.InitialLayout  =
+            .custom({ [unowned container] (layout) in
                 layout.isEnabled = true
                 layout.justifyContent = .flexEnd
                 layout.alignItems = .center
                 layout.width = YGValue(container.frame.size.width)
                 layout.height = YGValue(container.frame.size.height)
             })
-        }
 
         self.background = Background(color: .clear, layout: customLayout)
 
@@ -140,11 +135,30 @@ extension Sheet {
 
 }
 
+extension Sheet.Content {
+    @discardableResult
+    func defaultConfiguration() ->Sheet.Content{
+        
+        switch type {
+        case let .system(items, others):
+            break
+        }
+        
+        return self
+    }
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// Public API
+/////////////////////////////////////////////////////////////////////////////////////
 extension  Sheet {
     
     @discardableResult
-    public static func show(_ content:Sheet.Content, inView container:UIView ,yoga:YGLayoutConfigurationBlock? = nil,animation:Animation = .fadedIn)->Sheet{
-        let sheet =  Sheet(content:content,container:container,yoga:yoga,animation:animation)
+    public static func show(_ content:Sheet.Content, inView container:UIView ,configure: ((Sheet)->())?  = nil)->Sheet{
+        let sheet =  Sheet(content:content,container:container)
+        if let config = configure{config(sheet)}
         sheet.prepare()
         return sheet
     }
@@ -161,4 +175,13 @@ extension  Sheet {
     }
 }
 
+extension Sheet {
+ 
+    
+    @discardableResult
+    public func refreshContent(_ content:Content) ->Sheet{
+        self.content = content
+        return self
+    }
 
+}
