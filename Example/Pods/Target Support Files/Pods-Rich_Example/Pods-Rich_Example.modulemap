@@ -1,0 +1,6 @@
+framework module Pods_Rich_Example {
+  umbrella header "Pods-Rich_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

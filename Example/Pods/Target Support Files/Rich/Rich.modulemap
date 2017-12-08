@@ -1,0 +1,6 @@
+framework module Rich {
+  umbrella header "Rich-umbrella.h"
+
+  export *
+  module * { export * }
+}
