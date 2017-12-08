@@ -4,7 +4,7 @@ target 'Rich_Example' do
   pod 'Rich', :path => '../'
 
     pod 'YogaKit'
-
+    
   target 'Rich_Tests' do
     inherit! :search_paths
 
