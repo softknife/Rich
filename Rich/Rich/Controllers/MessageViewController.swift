@@ -13,7 +13,7 @@ class MessageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .red
     }
     
 }
@@ -123,12 +123,11 @@ extension MessageViewController{
     private func testActionSheet()  {
    
         
-        let confirm = MarginOperation(stringLiteral:"确定").plus { (mo) in
+        let confirm = Operation(stringLiteral:"确定").plus { (op) in
             //mo.margin = UIEdgeInsets(top:10)
-            let op = mo.operation
-            op.backgroundColor = .green
+            op.backgroundColor = .clear
             op.cornerRadius = 10
-            op.textColor = .white
+            op.textColor = .gray
             op.triggerHideView()
 //            op.action = {
 //                print("确定")
@@ -137,31 +136,28 @@ extension MessageViewController{
 
         }
         
-        let cancel = MarginOperation(stringLiteral: "取消").plus { (mo) in
-            mo.margin = UIEdgeInsets(top: 5)
-            mo.operation.plus{
-                $0.action = {
-                    print("取消")
-                    Sheet.hide()
-                }
-                $0.textColor = .gray
-                $0.backgroundColor = UIColor(white: 1, alpha: 0.7)
-                $0.cornerRadius = 10
+        let cancel = Operation(stringLiteral: "取消").plus { (op) in
+            op.margin = UIEdgeInsets(top: 5)
+            op.action = {
+                print("取消")
+                Sheet.hide()
             }
-            
+            op.textColor = .gray
+            op.backgroundColor = .clear
+            op.cornerRadius = 10
         }
         
         
         Sheet.show(
             .system(items:
                 [
-                    Operation(value: .text("浦发银行"), textColor: .black, backgroundColor: .white, action: {
+                    Operation(value: .text("浦发银行"), textColor: .black, action: {
                         print("浦发银行")
                     }),
-                    Operation(value: .text("建设银行"), textColor: .blue, backgroundColor: .orange, action: {
+                    Operation(value: .text("建设银行"), textColor: .blue, action: {
                         print("建设银行")
                     }),
-                    Operation(value: .text("招商银行"), textColor: .blue, backgroundColor: .purple, action: {
+                    Operation(value: .text("招商银行"), textColor: .blue, action: {
                         print("招商银行")
                     })],others: [confirm,cancel]),inView: view)
 

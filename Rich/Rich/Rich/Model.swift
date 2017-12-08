@@ -32,6 +32,7 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
     var cornerRadius : CGFloat = 0
     
     var triggerHide:Bool = false
+    var margin : UIEdgeInsets = .zero
 
     
     public init(value:Value,
@@ -40,6 +41,7 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
                 backgroundColor:UIColor = .clear ,
                 cornerRadius:CGFloat = 0,
                 style:Style = .normal,
+                margin : UIEdgeInsets = .zero,
                 action:Action? = nil)
     {
         
@@ -49,6 +51,7 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
         self.backgroundColor = backgroundColor
         self.action = action
         self.cornerRadius = cornerRadius
+        self.margin = margin
     }
     
     
@@ -60,19 +63,6 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
 
 
 
-final public class MarginOperation:ExpressibleByStringLiteral,AdditionalConfiguration {
-    
-    var operation : Operation = ""
-    var margin : UIEdgeInsets = UIEdgeInsets(top:10)
-    
-    init() { }
-    
-    public init(stringLiteral value: String) {
-        operation = Operation(stringLiteral: value)
-        operation.backgroundColor = UIColor(white:1.0,alpha:0.7)
-    }
-    
-}
 
 
 

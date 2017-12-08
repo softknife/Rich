@@ -55,10 +55,10 @@ extension Sheet{
 
         // configura default action to decide to hide current view or not
         switch content.type {
-        case let .system(_, others):
+        case let .system(items, others):
             
             guard let others = others else {break}
-            let ops = others.map{ $0.operation }
+            let ops = items + others
 
             setDefaultHideViewAction(ops)
         case .delay:break
@@ -127,7 +127,7 @@ extension Sheet {
 
         public static var delay : Content {return Content(type: .delay)}
 
-        public static func system(items:[Operation],others:[MarginOperation]? = nil) ->Content {
+        public static func system(items:[Operation],others:[Operation]? = nil) ->Content {
             return Content(type: .system(items: items, others: others))
         }
 
@@ -135,7 +135,7 @@ extension Sheet {
 
     enum ContentType{
         case delay
-        case system(items:[Operation],others:[MarginOperation]?)
+        case system(items:[Operation],others:[Operation]?)
     }
 
 
@@ -148,9 +148,27 @@ extension Sheet.Content {
         switch type {
         case let .system(items, others):
             
+            for item in items {
+                item.backgroundColor = UIColor.init(white: 1.0, alpha: 0.6)
+                item.textColor = .gray
+            }
+            
+            guard let others = others else{break}
+            
+            for item in others {
+                item.backgroundColor = UIColor.init(white: 1.0, alpha: 0.6)
+                item.margin = UIEdgeInsets(top:10)
+                item.cornerRadius = 10
+
+                switch item.style {
+                case .normal:
+                    item.textColor = .gray
+                case .danger:
+                    item.textColor = .red
+                }
+            }
             
             
-            break
         case .delay: break
         }
         

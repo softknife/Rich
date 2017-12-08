@@ -272,14 +272,32 @@ protocol BodyConfigure  {
     
     var content : T.Content {get set}
     
-    var blurView : VisualEffectView{get set}
     var contentView:UIView{get}
-
+    
     func prepareRender(_ layout:@escaping ConvenienceYGLayoutBlock)
     
 }
 
 extension BodyConfigure where Self:UIView {
+    func prepareRender(_ layout:@escaping ConvenienceYGLayoutBlock){
+        configureLayout { (yoga) in
+            layout(yoga)
+        }
+    }
+    
+    var contentView : UIView {return self}
+
+
+}
+
+protocol BodyVisualEffectConfigure :BodyConfigure{
+    
+    var blurView : VisualEffectView{get set}
+    
+
+}
+
+extension BodyVisualEffectConfigure where Self:UIView {
     var contentView : UIView {return blurView.content}
     
     func prepareRender(_ layout:@escaping ConvenienceYGLayoutBlock)  {

@@ -9,7 +9,7 @@
 import UIKit
 import YogaKit
 
-class AlertBody: UIView , BodyConfigure{
+class AlertBody: UIView , BodyVisualEffectConfigure{
     
     typealias T = Alert
     var content : T.Content

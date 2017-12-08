@@ -14,17 +14,12 @@ class SheetBody: UIView , BodyConfigure{
     typealias T = Sheet
     var content : T.Content
     
-    var blurView : VisualEffectView
-
     init(content:Sheet.Content) {
         
         self.content = content
-        blurView = VisualEffectView()
         
         super.init(frame: .zero)
         
-        addSubview(blurView)
-
         setup()
     }
     
@@ -90,27 +85,26 @@ extension SheetBody:YGLayoutDefaultConfiguration {
         }
     }
     
-    private func configOthers(_ items:[MarginOperation]){
+    private func configOthers(_ items:[Operation]){
         
         for (_, item) in items.enumerated() {
             
-            let marginOp = item
             
-            if marginOp.margin.top <= 0 {
+            if item.margin.top <= 0 {
                 let line = SeperateLine()
                 contentView.addSubview(line)
             }
             
-            let button = Button(content: marginOp.operation)
+            let button = Button(content: item)
             button.click = {btn in
-                marginOp.operation.action?()
+                item.action?()
             }
             contentView.addSubview(button)
             button.configureLayout(block: { (layout) in
                 layout.isEnabled = true
                 layout.height = 50
                                 
-                self.configViewMargin(marginOp.margin, layout: layout)
+                self.configViewMargin(item.margin, layout: layout)
         
             })
 

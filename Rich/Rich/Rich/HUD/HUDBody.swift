@@ -9,7 +9,7 @@
 import UIKit
 import YogaKit
 
-class HUDBody: UIView , BodyConfigure{
+class HUDBody: UIView , BodyVisualEffectConfigure{
     
     typealias T = HUD
     var content : T.Content
