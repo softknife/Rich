@@ -159,7 +159,8 @@ extension Sheet.Content {
                 item.backgroundColor = UIColor.init(white: 1.0, alpha: 0.6)
                 item.margin = UIEdgeInsets(top:10)
                 item.cornerRadius = 10
-
+                item.triggerHideView()
+                
                 switch item.style {
                 case .normal:
                     item.textColor = .gray

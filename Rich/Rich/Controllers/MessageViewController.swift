@@ -123,28 +123,10 @@ extension MessageViewController{
     private func testActionSheet()  {
    
         
-        let confirm = Operation(stringLiteral:"确定").plus { (op) in
-            //mo.margin = UIEdgeInsets(top:10)
-            op.backgroundColor = .clear
-            op.cornerRadius = 10
-            op.textColor = .gray
-            op.triggerHideView()
-//            op.action = {
-//                print("确定")
-//                Sheet.hide()
-//            }
-
-        }
+        let confirm = Operation(stringLiteral:"确定")
         
         let cancel = Operation(stringLiteral: "取消").plus { (op) in
-            op.margin = UIEdgeInsets(top: 5)
-            op.action = {
-                print("取消")
-                Sheet.hide()
-            }
-            op.textColor = .gray
-            op.backgroundColor = .clear
-            op.cornerRadius = 10
+            op.style = .danger
         }
         
         
@@ -159,7 +141,7 @@ extension MessageViewController{
                     }),
                     Operation(value: .text("招商银行"), textColor: .blue, action: {
                         print("招商银行")
-                    })],others: [confirm,cancel]),inView: view)
+                    })],others: [confirm,cancel]),inView: view){action in}
 
     }
 }
