@@ -63,7 +63,7 @@ extension Alert{
         // yoga layout configuration
         let body = AlertBody( content: content)
         
-        body.configureLayout { (layout) in
+        body.prepareRender(){ layout in
             layout.isEnabled = true
             layout.width = YGValue(container.frame.width - 60)
             layout.justifyContent = .center
@@ -128,13 +128,43 @@ extension Alert.Content {
         
         switch type {
         case let .default(title, subTitle, operations):
-            break
-
-        case let .image(title, image, operations): break
+            configDefaultProperty(title, subTitle: subTitle, image: nil, ops: operations)
+            
+        case let .image(title, _, operations):
+            configDefaultProperty(title, subTitle: nil, image: nil, ops: operations)
+            
         case .delay: break
         }
         
         return self
+    }
+    
+    private func configDefaultProperty(_ title: Description?,subTitle:Description?,image:Image?,ops:[Operation]?){
+        
+        title?.backgroundColor = .clear
+        title?.textColor = .gray
+        title?.font = .systemFont(ofSize: 16)
+        title?.margin = UIEdgeInsets(top: 10)
+        
+        subTitle?.backgroundColor = .clear
+        subTitle?.textColor = .gray
+        subTitle?.font = .systemFont(ofSize: 17)
+        subTitle?.margin = UIEdgeInsets(all:10)
+        
+        image?.margin = UIEdgeInsets(vertical: 10)
+        
+        guard let ops = ops else{   return }
+        for op in ops {
+            op.backgroundColor = .clear
+            
+            switch op.style {
+            case .normal:
+                op.textColor = .gray
+            case .danger:
+                op.textColor = .red
+            }
+        }
+
     }
 }
 

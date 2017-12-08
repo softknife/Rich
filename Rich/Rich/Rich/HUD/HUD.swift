@@ -45,15 +45,15 @@ extension HUD{
     
     func configBody(){
         let body = HUDBody(content:content)
-        body.configureLayout { (layout) in
+
+        body.prepareRender(){ layout in
             layout.isEnabled = true
             layout.width = 150
 //            layout.aspectRatio = 1
             layout.justifyContent = .center
-            layout.alignItems = .center
+            layout.alignItems = .stretch
         }
 
-        body.backgroundColor = .orange
         
         background.addSubview(body)
         
@@ -170,10 +170,22 @@ extension HUD.Content {
     public func defaultConfiguration() ->HUD.Content {
         switch type {
         case .systemActivity:break
-        case .success(let description): break
-        case .failure(let description): break
-        case let  .titleThenImage(title, image): break
-        case let .imageThenName(image, name): break
+        case .success(let description):
+            
+            description?.margin = UIEdgeInsets(top:5,bottom:5)
+            
+        case .failure(let description):
+            description?.margin = UIEdgeInsets(top:5,bottom:5)
+
+        case let  .titleThenImage(title, image):
+            title?.margin = UIEdgeInsets(top:10)
+            image?.margin = UIEdgeInsets(vertical:5)
+
+        case let .imageThenName(image, name):
+            
+            image?.margin = UIEdgeInsets(top:10)
+            name?.margin = UIEdgeInsets(vertical:5)
+
         case .progress(let progress): break
         case .delay: break
 

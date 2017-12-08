@@ -272,7 +272,47 @@ protocol BodyConfigure  {
     
     var content : T.Content {get set}
     
+    var blurView : VisualEffectView{get set}
+    var contentView:UIView{get}
+
+    func prepareRender(_ layout:@escaping ConvenienceYGLayoutBlock)
+    
 }
+
+extension BodyConfigure where Self:UIView {
+    var contentView : UIView {return blurView.content}
+    
+    func prepareRender(_ layout:@escaping ConvenienceYGLayoutBlock)  {
+        
+        var reference : YGLayout!
+        configureLayout { (yoga) in
+            layout(yoga)
+            reference = yoga
+        }
+        
+        blurView.configureLayout { (yoga) in
+            yoga.isEnabled = true
+            yoga.justifyContent = .center
+            yoga.alignItems = .stretch
+        }
+        
+        blurView.subviews.forEach { (subView) in
+            subView.configureLayout { (yoga) in
+                yoga.isEnabled = true
+                yoga.justifyContent = .center
+                yoga.alignItems = .stretch
+            }
+        }
+        
+        contentView.configureLayout { (yoga) in
+            yoga.isEnabled = true
+            yoga.justifyContent = reference.justifyContent
+            yoga.alignItems = reference.alignItems
+        }
+    }
+
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 //// Background Configuration protocol
@@ -283,6 +323,28 @@ protocol BodyConfigure  {
 //    
 //}
 
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//// YGLayout Default Configuration  protocol
+//////////////////////////////////////////////////////////////////////////////////////////
+protocol YGLayoutDefaultConfiguration {
+    
+    func configViewMargin(_ margin:UIEdgeInsets , layout:YGLayout)
+
+}
+extension YGLayoutDefaultConfiguration{
+    
+    func configViewMargin(_ margin:UIEdgeInsets , layout:YGLayout){
+        
+        if margin.top > 0 { layout.marginTop = YGValue(margin.top)}
+        if margin.left > 0 { layout.marginLeft = YGValue(margin.left)}
+        if margin.bottom > 0 { layout.marginBottom = YGValue(margin.bottom)}
+        if margin.right > 0 { layout.marginRight = YGValue(margin.right)}
+        
+    }
+
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //// ActionDefaultTriggerHideView  protocol
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -292,14 +354,14 @@ protocol AutoTriggerHideActiveView:class{
     /// Decide to hide active view or not when associated action is triggered
     var triggerHide:Bool {get set}
     @discardableResult
-    func triggerHide(_ hide:Bool) -> Self
+    func triggerHideView() -> Self
 }
 
 extension AutoTriggerHideActiveView{
     
     @discardableResult
-    func triggerHide(_ hide:Bool) -> Self{
-        triggerHide = hide
+    func triggerHideView() -> Self{
+        triggerHide = true
         return self
     }
 }

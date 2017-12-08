@@ -13,10 +13,16 @@ class HUDBody: UIView , BodyConfigure{
     
     typealias T = HUD
     var content : T.Content
+    var blurView : VisualEffectView
     
+
     init(content:HUD.Content) {
         self.content = content
+        blurView = VisualEffectView()
+
         super.init(frame: .zero)
+        
+        addSubview(blurView)
         setup()
     }
     
@@ -24,9 +30,11 @@ class HUDBody: UIView , BodyConfigure{
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
 }
 
-extension HUDBody {
+extension HUDBody:YGLayoutDefaultConfiguration {
     
     private func setup()  {
         
@@ -38,32 +46,35 @@ extension HUDBody {
         case .systemActivity:
             
             let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-            addSubview(activity)
+            contentView.addSubview(activity)
             activity.configureLayout(block: { (layout) in
                 layout.isEnabled = true
                 layout.alignSelf = .stretch
                 layout.aspectRatio = 1
+                
             })
             activity.startAnimating()
             
         case let .success(title):
             
             let image = Image(named: "thumb")
-            configImage(image,marginTop: 5)
+            image.margin = UIEdgeInsets(vertical:10)
+            configImage(image)
             
-            configTitle(title,marginTop: 10,marginBottom: 10)
+            configTitle(title)
 
         case let .failure(title):
             
             let image = Image(named: "thumb")
-            configImage(image,marginTop: 5)
+            image.margin = UIEdgeInsets(vertical:10)
+            configImage(image)
         
-            configTitle(title,marginTop: 10,marginBottom: 10)
+            configTitle(title)
             
         case let .progress(progress):
             
             let progressView = ProgressView(content:progress)
-            addSubview(progressView)
+            contentView.addSubview(progressView)
             progressView.configureLayout(block: { (layout) in
                 layout.isEnabled =  true
                 layout.width = 100
@@ -75,16 +86,16 @@ extension HUDBody {
         case let .titleThenImage(title, image):
             
             
-            configTitle(title,marginTop: 5)
+            configTitle(title)
             
-            configImage(image,marginTop: 10,marginBottom: 10)
+            configImage(image)
 
 
         case let .imageThenName(image, name):
             
-            configImage(image,marginTop: 5)
+            configImage(image)
 
-            configTitle(name,marginTop: 10,marginBottom: 10)
+            configTitle(name)
         case .delay:break
 
 
@@ -92,33 +103,34 @@ extension HUDBody {
         
     }
     
-    private func configImage(_ image:Image?,marginTop:YGValue = 0,marginBottom:YGValue = 0){
+    private func configImage(_ image:Image?){
         
         guard let image = image else {
             return
         }
         
         let successView = ImageView(content: image)
-        addSubview(successView)
+        contentView.addSubview(successView)
         successView.configureLayout(block: { (layout) in
             layout.isEnabled = true
-            layout.marginTop = marginTop
-            layout.marginBottom = marginBottom
+            
+            self.configViewMargin(image.margin, layout: layout)
             
             layout.flexGrow = 1
             layout.maxHeight = 100
+            layout.alignSelf = .center
             
         })
     }
     
-    private func configTitle(_ title:Description? ,marginTop:YGValue = 0 ,marginBottom: YGValue = 0){
+    private func configTitle(_ title:Description? ){
         if let title = title {
             let titleLabel = TextLabel(content: title)
-            addSubview(titleLabel)
+            contentView.addSubview(titleLabel)
             titleLabel.configureLayout(block: { (layout) in
                 layout.isEnabled = true
-                layout.marginTop = marginTop
-                layout.marginBottom = marginBottom
+                layout.alignSelf = .center
+                self.configViewMargin(title.margin, layout: layout)
             })
             
         }

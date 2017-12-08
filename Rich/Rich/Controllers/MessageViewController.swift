@@ -90,8 +90,16 @@ extension MessageViewController{
             let sub = desc[Int(arc4random_uniform(UInt32(desc.count - 1)))]
             
             Alert.show(.delay, inView: view){ alert in
+                
                 alert.background.backgroundColor = .blue
-                alert.refreshContent(.default(title:"测试",subTitle:Description(stringLiteral:"\(sub)"),operations:[Operation(stringLiteral:"确定").triggerHide(true),"取消"]))
+                
+                let content = Alert.Content.default(
+                                title:"测试",
+                                subTitle:Description(stringLiteral:"\(sub)"),
+                                operations:[Operation(stringLiteral:"确定").triggerHideView(),"取消"]
+                                                    ).defaultConfiguration()
+                
+                alert.refreshContent(content)
             }
 
         }else{
@@ -101,7 +109,7 @@ extension MessageViewController{
                 let content = Alert.Content.image(
                             title:"测试图片",
                             image:Image(named:"thumb"),
-                            operations:[Operation(stringLiteral:"确定").triggerHide(true)]
+                            operations:[Operation(stringLiteral:"确定").triggerHideView()]
                                                   ).defaultConfiguration()
                 
                 alert.refreshContent(content)
@@ -121,7 +129,7 @@ extension MessageViewController{
             op.backgroundColor = .green
             op.cornerRadius = 10
             op.textColor = .white
-            op.triggerHide(true)
+            op.triggerHideView()
 //            op.action = {
 //                print("确定")
 //                Sheet.hide()

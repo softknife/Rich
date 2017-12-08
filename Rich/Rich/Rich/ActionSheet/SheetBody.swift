@@ -14,10 +14,17 @@ class SheetBody: UIView , BodyConfigure{
     typealias T = Sheet
     var content : T.Content
     
+    var blurView : VisualEffectView
+
     init(content:Sheet.Content) {
+        
         self.content = content
+        blurView = VisualEffectView()
+        
         super.init(frame: .zero)
         
+        addSubview(blurView)
+
         setup()
     }
     
@@ -28,7 +35,7 @@ class SheetBody: UIView , BodyConfigure{
 }
 
 
-extension SheetBody {
+extension SheetBody:YGLayoutDefaultConfiguration {
     
     private func setup(){
         layer.cornerRadius = 10
@@ -59,7 +66,7 @@ extension SheetBody {
             layout.justifyContent = .center
             layout.alignItems = .stretch
         }
-        addSubview(container)
+        contentView.addSubview(container)
         
         
         for (offset, item) in items.enumerated() {
@@ -91,23 +98,19 @@ extension SheetBody {
             
             if marginOp.margin.top <= 0 {
                 let line = SeperateLine()
-                addSubview(line)
+                contentView.addSubview(line)
             }
             
             let button = Button(content: marginOp.operation)
             button.click = {btn in
                 marginOp.operation.action?()
             }
-            addSubview(button)
+            contentView.addSubview(button)
             button.configureLayout(block: { (layout) in
                 layout.isEnabled = true
                 layout.height = 50
-                
-                let margin = marginOp.margin
-                if margin.top > 0 { layout.marginTop = YGValue(margin.top) }
-                if margin.left > 0 { layout.marginLeft = YGValue(margin.left) }
-                if margin.bottom > 0 { layout.marginBottom = YGValue(margin.bottom) }
-                if margin.right > 0 { layout.marginRight = YGValue(margin.right) }
+                                
+                self.configViewMargin(marginOp.margin, layout: layout)
         
             })
 

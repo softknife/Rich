@@ -17,20 +17,7 @@ public class Background:UIView {
     public init(color:UIColor , layout:InitialLayout) {
         
         super.init(frame: .zero)
-        //        self.viewType = viewType
-        
-        //        // initial create view
-        //        switch viewType {
-        //        case .defualt(let color):
-        //
-        //            view = UIView()
-        //            view.backgroundColor = color
-        //
-        //        case .blur(let blurStyle):
-        //
-        //            view = UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
-        //
-        //        }
+
         backgroundColor = color
         
         // initial layout
@@ -75,40 +62,6 @@ extension Background{
         case custom(YGLayoutConfigurationBlock)
     }
     
-//    public enum ViewType {
-//        case `defualt`(UIColor)
-//        case blur(UIBlurEffectStyle)
-//    }
-    
-    //    class BlurView: UIVisualEffectView {
-    //
-    //    }
-    //
-    //    class NormalView: UIView {
-    //
-    //    }
-    
-}
-
-extension Background{
-    
-    //    func addSubview(_ view:UIView){
-    //
-    //        switch viewType {
-    //        case .blur(_):
-    //
-    //            let blurView = self.view as! UIVisualEffectView
-    //            blurView.contentView.addSubview(view)
-    //
-    //        case .defualt(_):
-    //
-    //            self.view.addSubview(view)
-    //        }
-    //    }
-    //
-    //    func updateLayout()  {
-    //        view.yoga.applyLayout(preservingOrigin: true)
-    //    }
 }
 
 

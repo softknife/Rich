@@ -68,14 +68,16 @@ extension Sheet{
         // Yoga layout configuration
         let body = SheetBody(content: content)
 
-        body.configureLayout { (layout) in
+        body.prepareRender(){ layout in
+            
             layout.isEnabled = true
             layout.width = YGValue(container.frame.width - 60)
             layout.marginBottom = 10
             layout.justifyContent = .center
             layout.alignItems = .stretch
-        }
 
+        }
+        
         background.addSubview(body)
 
         background.body = body

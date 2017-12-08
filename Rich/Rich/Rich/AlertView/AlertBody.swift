@@ -14,11 +14,17 @@ class AlertBody: UIView , BodyConfigure{
     typealias T = Alert
     var content : T.Content
     
+    var blurView : VisualEffectView
+
     init(color: UIColor = UIColor(white: 1.0, alpha: 0.8) , content:Alert.Content) {
         
         self.content = content
+        blurView = VisualEffectView()
 
         super.init(frame: .zero)
+        
+        addSubview(blurView)
+
         self.backgroundColor = color
         setup()
     }
@@ -26,7 +32,8 @@ class AlertBody: UIView , BodyConfigure{
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    
 }
 
 extension AlertBody {
@@ -47,7 +54,7 @@ extension AlertBody {
                 layout.justifyContent = .flexStart
                 layout.alignItems = .center
             })
-            addSubview(contentView)
+            self.contentView.addSubview(contentView)
             
             // operation view
             configOperationView(ops)
@@ -61,7 +68,7 @@ extension AlertBody {
                 layout.justifyContent = .flexStart
                 layout.alignItems = .center
             })
-            addSubview(contentView)
+            self.contentView.addSubview(contentView)
             
             
             // operation view
@@ -75,7 +82,7 @@ extension AlertBody {
      
         // seperateLine
         let seperate = SeperateLine()
-        addSubview(seperate)
+        self.contentView.addSubview(seperate)
         
         // lower operation View
         let operationView = OperationView(ops: ops)
@@ -87,7 +94,7 @@ extension AlertBody {
             layout.alignItems = .stretch
             
         })
-        addSubview(operationView)
+        self.contentView.addSubview(operationView)
 
     }
 }
@@ -98,7 +105,7 @@ extension AlertBody {
 // MARK:- ContentView
 extension AlertBody {
     
-    class ContentView:UIView {
+    class ContentView:UIView , YGLayoutDefaultConfiguration{
         init(title:Description?,subTitle:Description?) {
             super.init(frame: .zero)
             
@@ -112,12 +119,12 @@ extension AlertBody {
                 addSubview(titleLabel)
                 titleLabel.configureLayout(block: { (layout) in
                     layout.isEnabled = true
-                    layout.marginTop = 20
-                    layout.marginBottom = 10
                     
                     layout.flexGrow = 1
                     layout.maxHeight = 100
                     layout.minHeight = 80
+                    
+                    self.configViewMargin(sub.margin, layout: layout)
 
                 })
 
@@ -154,7 +161,7 @@ extension AlertBody {
                 addSubview(titleLabel)
                 titleLabel.configureLayout(block: { (layout) in
                     layout.isEnabled = true
-                    layout.marginTop = 5
+                    self.configViewMargin(title.margin, layout: layout)
                 })
             }
         }
@@ -162,6 +169,8 @@ extension AlertBody {
         required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
+        
+  
     }
 }
 
@@ -179,7 +188,7 @@ extension AlertBody {
                 if offset > 0 {
                     
                     let separete = UIView()
-//                    separete.backgroundColor = .lightGray
+                    separete.backgroundColor = UIColor.groupTableViewBackground
                     addSubview(separete)
                     separete.configureLayout(block: { (layout) in
                         layout.isEnabled = true

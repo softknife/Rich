@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import YogaKit
 
 extension UIColor {
     
@@ -94,3 +94,4 @@ public enum State:Equatable{
 ////////////////////////////////////////////////////////////////////////////////
 public typealias Action = ()->()
 
+public typealias ConvenienceYGLayoutBlock = @convention(block) (YGLayout)->()

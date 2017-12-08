@@ -31,6 +31,13 @@ extension UIEdgeInsets {
         right = 0
     }
     
+    public init(all:CGFloat){
+        top = all
+        left = all
+        bottom = all
+        right = all
+
+    }
     
 }
 
