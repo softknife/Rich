@@ -52,6 +52,7 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
         self.action = action
         self.cornerRadius = cornerRadius
         self.margin = margin
+        self.style = style
     }
     
     
@@ -90,6 +91,7 @@ final public class Description:ExpressibleByStringLiteral,AdditionalConfiguratio
         self.backgroundColor = backgroundColor
         self.font = font
         self.numberOfLines = numberOfLines
+        self.margin = margin
     }
     
     public required init(stringLiteral value: String) {
@@ -112,6 +114,7 @@ final public class Image:AdditionalConfiguration {
         self.value = value
         self.backgroundColor = backgroundColor
         self.contentMode = contentMode
+        self.margin = margin
     }
     
     public init(named:String,
@@ -122,6 +125,8 @@ final public class Image:AdditionalConfiguration {
         self.value = UIImage(named: named)
         self.backgroundColor = backgroundColor
         self.contentMode = contentMode
+        self.margin = margin
+
     }
 
 }

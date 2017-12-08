@@ -123,11 +123,9 @@ extension MessageViewController{
     private func testActionSheet()  {
    
         
-        let confirm = Operation(stringLiteral:"确定")
+        let confirm :Operation = "确定"
         
-        let cancel = Operation(stringLiteral: "取消").plus { (op) in
-            op.style = .danger
-        }
+        let cancel = Operation(value: .text("取消"),style:.danger)
         
         
         Sheet.show(
