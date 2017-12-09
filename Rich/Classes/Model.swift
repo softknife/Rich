@@ -62,7 +62,15 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
     
 }
 
-
+extension Operation {
+    
+//    public typealias OperationConfigBlock = @convention(block) (Operation)->()
+    
+    public convenience init(_ named :String){
+        self.init(stringLiteral: named)
+    }
+    
+}
 
 
 
@@ -96,6 +104,13 @@ final public class Description:ExpressibleByStringLiteral,AdditionalConfiguratio
     
     public required init(stringLiteral value: String) {
         self.value = value
+    }
+}
+
+extension Description {
+    
+    public convenience init(_ description:String) {
+        self.init(stringLiteral: description)
     }
 }
 

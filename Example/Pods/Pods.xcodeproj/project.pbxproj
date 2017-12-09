@@ -14,7 +14,6 @@
 		1D9E12822A84316B3C39D8A824865619 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D865298AF1C115EE7BDF24563469807 /* Button.swift */; };
 		2393B0BD4300DE5C1D305473CCF73B83 /* YGLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = EBB93D2F86BE9E7D3783371446D02DA5 /* YGLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		26FBE87E81B3BD1CC821BBC21E777F58 /* SeperateLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB7C1C60DBA03361C1486FECF6BE1E3 /* SeperateLine.swift */; };
-		2ABCDEB6793A3114CB13B068CC342D17 /* Eraser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC70D38D617A6D363D09AF7139BFAFA /* Eraser.swift */; };
 		2AD14D32B5540D1B26D5FFF337010224 /* UIView+Yoga.h in Headers */ = {isa = PBXBuildFile; fileRef = F4B7AE7A661CC4E37A2922ADFBD3B197 /* UIView+Yoga.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30BF1C8B58CC8010A373E4ED42306D66 /* TextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD53F331C35E8CB5FB723E8713CD112E /* TextLabel.swift */; };
 		349013EC931A7A6D0AD3DDDA04189578 /* YGNodeList.c in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9B577C4641D9F35AAE7379EDB4A83 /* YGNodeList.c */; };
@@ -26,7 +25,6 @@
 		58A81DCDE77F252C9DD6235F348F79D3 /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D9AFFA00B85F6F74DD89129316CE0F /* VisualEffectView.swift */; };
 		5EF18613D2723168B0313EBFBE788DFC /* YGLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEB112043318501900257AA3E747AFA /* YGLayoutExtensions.swift */; };
 		666247AA056099BE1ECFFA8BDF7E5EAC /* Pods-Rich_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A3F4C90EB5D6808DEBBD36FD69A5A6F /* Pods-Rich_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		67FFF67D4FDEDDD93E0AD3B46575B331 /* CocoaLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ACF4E3B8E5778E7E41BA28AE08BF23F /* CocoaLayout.swift */; };
 		6FC9EEA8E00D1B6EC37B579DF8D14243 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		75224E3D6A5AACE44412670D0E656B23 /* HUDBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E23B3A14D52C839C2EDC32A208A254 /* HUDBody.swift */; };
 		7562E17DEB61B8B31729183EF4217EE7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
@@ -70,7 +68,6 @@
 		171206DA5EEB930897F2B6089171EE52 /* Pods-Rich_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Rich_Example-frameworks.sh"; sourceTree = "<group>"; };
 		17D9AFFA00B85F6F74DD89129316CE0F /* VisualEffectView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		184E469E49EB7181933D426FAF9E4423 /* Pods_Rich_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Rich_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1ACF4E3B8E5778E7E41BA28AE08BF23F /* CocoaLayout.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CocoaLayout.swift; sourceTree = "<group>"; };
 		20A0B3AE1C72AA99B843C635AA24B8CC /* Rich-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Rich-dummy.m"; sourceTree = "<group>"; };
 		26018A0F3C513DA26D5CE59B1148CE33 /* Model.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		297B2DDBB0869CE2E92C5855E7A495DC /* Pods-Rich_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Rich_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -125,7 +122,6 @@
 		DC03F2C587BB6D469F68971A72A14393 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E86336A34EAA14566915BF50D59F6968 /* Pods-Rich_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Rich_Tests-umbrella.h"; sourceTree = "<group>"; };
 		EBB93D2F86BE9E7D3783371446D02DA5 /* YGLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = YGLayout.h; sourceTree = "<group>"; };
-		ECC70D38D617A6D363D09AF7139BFAFA /* Eraser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Eraser.swift; sourceTree = "<group>"; };
 		F30864F7164903E44044770E4788F13E /* Pods-Rich_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Rich_Example-resources.sh"; sourceTree = "<group>"; };
 		F4B7AE7A661CC4E37A2922ADFBD3B197 /* UIView+Yoga.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIView+Yoga.h"; sourceTree = "<group>"; };
 		FAB7C1C60DBA03361C1486FECF6BE1E3 /* SeperateLine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SeperateLine.swift; sourceTree = "<group>"; };
@@ -322,9 +318,7 @@
 			isa = PBXGroup;
 			children = (
 				4FEB692594983963EF336221F003DA84 /* Background.swift */,
-				1ACF4E3B8E5778E7E41BA28AE08BF23F /* CocoaLayout.swift */,
 				2E8D24D81C308B87C565E0321007E416 /* Common.swift */,
-				ECC70D38D617A6D363D09AF7139BFAFA /* Eraser.swift */,
 				26018A0F3C513DA26D5CE59B1148CE33 /* Model.swift */,
 				6C754BFEA1E762FA577E90650F5B0EC4 /* Protocol.swift */,
 				C2F5F6A5ACF033A956102D387088B28D /* Rich.h */,
@@ -535,9 +529,7 @@
 				3D657F7AD2ADACCE5F402AB29688E69F /* AlertBody.swift in Sources */,
 				E90F695A5945ABDAA8D122DD2CC23AF7 /* Background.swift in Sources */,
 				1D9E12822A84316B3C39D8A824865619 /* Button.swift in Sources */,
-				67FFF67D4FDEDDD93E0AD3B46575B331 /* CocoaLayout.swift in Sources */,
 				18B0C6F5323F62400373CD0D6D6CB626 /* Common.swift in Sources */,
-				2ABCDEB6793A3114CB13B068CC342D17 /* Eraser.swift in Sources */,
 				D973E0DD8110B6917AE877F1272717EC /* HUD.swift in Sources */,
 				75224E3D6A5AACE44412670D0E656B23 /* HUDBody.swift in Sources */,
 				95FB3356772E9DCF2C205D271460D6B5 /* ImageView.swift in Sources */,
