@@ -15,11 +15,24 @@ class  ProgressView: UIView {
     init(content:HUD.ProgressType) {
         self.progress = content
         super.init(frame: .zero)
+        setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setup()  {
+        
+        switch progress {
+        case .default(let pro):
+            print(pro.totalUnitCount)
+        case .pie(let pro):
+            print(pro.totalUnitCount)
+        case .textInCircle(let pro):
+            print(pro.totalUnitCount)
+        }
+    }
+
     
 }

@@ -71,7 +71,7 @@ extension HUDBody:YGLayoutDefaultConfiguration {
         
             configTitle(title)
             
-        case  .progress(_):
+        case  .progress(let progress):
             
 
             let progressView = ProgressView(content:progress)
