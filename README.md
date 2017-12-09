@@ -12,7 +12,14 @@
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+It is show time:
+
+![](demo.gif)
+
+
+
 ## Requirements
+>=iOS8 , swift4
 
 ## Installation
 
