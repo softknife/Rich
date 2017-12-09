@@ -28,10 +28,10 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
     var textColor : UIColor = .gray
     var font : UIFont = .systemFont(ofSize: 16)
     var backgroundColor:UIColor = .clear
-    var action : Action? = nil
+    var action : (()->())? = nil
     var cornerRadius : CGFloat = 0
     
-    var triggerHide:Bool = false
+    public var triggerHide:Bool = false
     var margin : UIEdgeInsets = .zero
 
     
@@ -42,7 +42,7 @@ final public class Operation: ExpressibleByStringLiteral,AdditionalConfiguration
                 cornerRadius:CGFloat = 0,
                 style:Style = .normal,
                 margin : UIEdgeInsets = .zero,
-                action:Action? = nil)
+                action:(()->())? = nil)
     {
         
         self.value = value

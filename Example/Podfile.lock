@@ -1,5 +1,5 @@
 PODS:
-  - Rich (0.1.0)
+  - Rich (0.1.1)
 
 DEPENDENCIES:
   - Rich (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Rich: 99348fe84ee740aed2b4873bfe567e0919e0e675
+  Rich: cb1f2216a97f09b8b13c997b249f3349c4e667ba
 
 PODFILE CHECKSUM: 4d39f5ac901f229d711551edc4146ace09aa403f
 

@@ -124,23 +124,23 @@ extension MessageViewController{
     private func testActionSheet()  {
    
         
-        let confirm :Operation = "确定"
+        let confirm : Rich.Operation = "确定"
         
         let cancel = Operation(value: .text("取消"),style:.danger)
         
+        let pufa =   Rich.Operation(value: .text("浦发银行")) {
+            print("浦发一行")
+        }
+        
+        let items = [ pufa,
+                        Operation(value: .text("建设银行")),
+                        Operation(value: .text("招商银行"))
+                    ]
+        
         
         Sheet.show(
-            .system(items:
-                [
-                    Operation(value: .text("浦发银行"), textColor: .black, action: {
-                        print("浦发银行")
-                    }),
-                    Operation(value: .text("建设银行"), textColor: .blue, action: {
-                        print("建设银行")
-                    }),
-                    Operation(value: .text("招商银行"), textColor: .blue, action: {
-                        print("招商银行")
-                    })],others: [confirm,cancel]),inView: view){action in}
+            .system(items: items
+                ,others: [confirm,cancel]),inView: view){action in}
 
     }
 }

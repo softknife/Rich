@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Rich'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'HUD , ActionSheet & AlertView driven by Yoga'
 
 # This description is used to generate tags and improve search results.
@@ -32,9 +32,11 @@ This project attempts to test the concept of protocol-oriented programming by co
 
 s.source_files = '{Rich/Classes,External}/**/*.{swift,h,m,c}'
   
-  s.resource_bundles = {
-   'Rich' => ['Rich/Assets/*.png']
-  }
+# s.resource_bundles = {
+#   'Rich' => ['Rich/Assets/*.png']
+#  }
+
+s.resources  = 'Rich/*.xcassets'
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

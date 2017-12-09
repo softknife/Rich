@@ -366,7 +366,7 @@ extension YGLayoutDefaultConfiguration{
 //////////////////////////////////////////////////////////////////////////////////////////
 //// ActionDefaultTriggerHideView  protocol
 //////////////////////////////////////////////////////////////////////////////////////////
-protocol AutoTriggerHideActiveView:class{
+public protocol AutoTriggerHideActiveView:class{
     
     
     /// Decide to hide active view or not when associated action is triggered
@@ -375,7 +375,7 @@ protocol AutoTriggerHideActiveView:class{
     func triggerHideView() -> Self
 }
 
-extension AutoTriggerHideActiveView{
+public extension AutoTriggerHideActiveView{
     
     @discardableResult
     func triggerHideView() -> Self{
