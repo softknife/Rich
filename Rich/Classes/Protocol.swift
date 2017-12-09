@@ -47,7 +47,7 @@ protocol CommonConfigure:BaseConfigure{
     associatedtype Content where Content: ContentBindable
     var content:Content{get set}
     
-    init(content:Content, container:UIView)
+    init(container:UIView)
     
     @discardableResult
     func diffChange(from node:Self) -> Self
@@ -117,7 +117,7 @@ protocol CommonAction {
     /// Hidden current view , and then , decide to show next view or not
     ///
     /// - Parameter showNext: show next view or not
-    func hide(showNext:Bool)
+    func makeHidden(type:Hidden,showNext:Bool)
     
 
     /// If operation'action property is nil, we give it default action to hidden current view
@@ -197,13 +197,22 @@ extension CommonAction where Self:CommonConfigure & DistinguishAction{
     }
     
     
-    func hide(showNext:Bool) {
+    func makeHidden(type:Hidden = .removeIfActive ,showNext:Bool = true) {
         
         Rich.shared.queue.sync {
             
-            guard case State.awake(_) = state else {
-                return
+            switch type {
+            case .removeIfActive:
+                guard case State.awake(_) = state else {
+                    return
+                }
+            case .removeDirectly:
+                guard showNext else {
+                    state = .dying(finished: nil)
+                    return
+                }
             }
+            
             
             guard let next = Rich.nextWillShow(from: self) else {
                 state = .dying(finished:nil)
@@ -254,7 +263,7 @@ extension CommonAction where Self:CommonConfigure & DistinguishAction{
             if op.action == nil && op.triggerHide{
                 op.action =  {  [weak self] in
                     guard let weakSelf = self else {return}
-                    weakSelf.hide(showNext: true)
+                    weakSelf.makeHidden()
                 }
             }
         }

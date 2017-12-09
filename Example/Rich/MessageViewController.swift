@@ -48,22 +48,26 @@ extension MessageViewController{
     private func testHUD() {
         
         if arc4random_uniform(10) % 2 == 0 {
-            let ad = HUD.show( .success(description: "成功"), inView: view, configure: { hud in
-                    hud.background.backgroundColor = .green
-            })
+            let ad = HUD.show(on : view)  { hud in
+                hud.background.backgroundColor = .green
+                hud.refreshContent(.success(description: "成功"))
+            }
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
                 
                 ad.hide()
             }
 
         }else{
-            HUD.show( .systemActivity, inView: view){hud in
+            HUD.show(on : view){hud in
                 hud.background.backgroundColor = .purple
+                hud.refreshContent(.systemActivity)
             }
             
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2, execute: {
                 
-                HUD.show( .success(description: "成功"), inView: self.view)
+                HUD.show(on: self.view){
+                    $0.refreshContent(.success(description: "成功"))
+                }
                 
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
                     
@@ -84,34 +88,34 @@ extension MessageViewController{
         if arc4random_uniform(10) % 2 == 0 {
             
             let desc = ["点什么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点",
-                        "点什么?测试点什么?试 🛰大大大",
+                        "点什么?测试点什么?试😁😁😁 🛰大大大",
                         "试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点么?测试点什么?试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测试点什么?测试点试点什么?测",
                         "😁😁😁😁😁😁😁😁"]
             
             let sub = desc[Int(arc4random_uniform(UInt32(desc.count - 1)))]
             
-            Alert.show(.delay, inView: view){ alert in
+            Alert.show(on: view){ alert in
                 
                 alert.background.backgroundColor = .blue
                 
                 let content = Alert.Content.default(
                                 title:"测试",
-                                subTitle:Description(stringLiteral:"\(sub)"),
-                                operations:[Operation(stringLiteral:"确定").triggerHideView(),"取消"]
-                                                    ).defaultConfiguration()
+                                subTitle:Description("\(sub)"),
+                                operations:[Operation("确定").triggerHideView(),"取消"]
+                                                    ).defaultAppearance()
                 
                 alert.refreshContent(content)
             }
 
         }else{
             
-            Alert.show(.delay, inView: view){ alert in
+            Alert.show(on: view){ alert in
                 
                 let content = Alert.Content.image(
                             title:"测试图片",
                             image:Image(named:"thumb"),
-                            operations:[Operation(stringLiteral:"确定").triggerHideView()]
-                                                  ).defaultConfiguration()
+                            operations:[Operation("确定").triggerHideView()]
+                                                  ).defaultAppearance()
                 
                 alert.refreshContent(content)
                 
@@ -124,23 +128,20 @@ extension MessageViewController{
     private func testActionSheet()  {
    
         
-        let confirm : Rich.Operation = "确定"
+        let confirm  = Rich.Operation("确定").triggerHideView()
         
-        let cancel = Operation(value: .text("取消"),style:.danger)
+        let cancel = Rich.Operation(value: .text("取消"),style:.danger)
         
-        let pufa =   Rich.Operation(value: .text("浦发银行")) {
+        let pufa =   Rich.Operation("浦发银行").plus{ _ in
             print("浦发一行")
         }
         
-        let items = [ pufa,
-                        Operation(value: .text("建设银行")),
-                        Operation(value: .text("招商银行"))
-                    ]
         
-        
-        Sheet.show(
-            .system(items: items
-                ,others: [confirm,cancel]),inView: view){action in}
+        Sheet.show(on: view){action in
+            
+            let content = Sheet.Content.system(items: [ pufa,Operation("建设银行"),  Operation("招商银行")] ,others: [confirm,cancel]).defaultAppearance()
+            action.refreshContent(content)
+        }
 
     }
 }

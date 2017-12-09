@@ -21,12 +21,11 @@ public final class HUD:Skeleton{
     public var background : Background
     public var animation:Animation = .fadedIn
     
-    var content:Content
+    var content:Content = .delay
     
     
-    required public init(content:Content, container:UIView){
+    required public init( container:UIView){
         
-        self.content = content.defaultConfiguration()
         self.containerView = container
         
         self.background = Background(color: .clear, layout: .default(container))
@@ -166,8 +165,11 @@ extension HUD {
 
 extension HUD.Content {
     
+    /// in this method , we will give some default properties value to the content of HUD Node
+    ///
+    /// - Returns: Content
     @discardableResult
-    public func defaultConfiguration() ->HUD.Content {
+    public func defaultAppearance() ->HUD.Content {
         switch type {
         case .systemActivity:break
         case .success(let description):
@@ -202,27 +204,50 @@ extension HUD.Content {
 /////////////////////////////////////////////////////////////////////////////////////
 extension HUD {
     
+    /// This method help you show up one HUD
+    ///
+    /// - Parameters:
+    ///   - container: we will put the new HUD on the container you provided
+    ///   - configure: in this configure block , you can custom three main feature :
+    ///       1. animation:  animation style .
+    ///       2. background: include backgroundcolor or whole background, even yogalayout.
+    ///       3. content:  the content appearance and something that will show.
+    /// - Returns: the created new HUD
     @discardableResult
-    public static func show(_ content:HUD.Content, inView container:UIView ,configure: ((HUD)->())? = nil)->HUD{
+    public static func show(on container:UIView ,configure: ((HUD)->())? = nil)->HUD{
         
-        let hud =  HUD(content:content,container:container)
+        let hud =  HUD(container:container)
         if let config = configure { config(hud)}
         hud.prepare()
         
         return hud
     }
     
+    
+    /// instance method to call hide and remove
     public func hide() {
-        hide(showNext: true)
+        makeHidden()
     }
     
-    public static func hide(){
+    /// class method to call hide and remove
+    public static func hide(type:Hidden = .removeDirectly){
 
         let activeNode = Rich.getNodes(type: .hud)
-        activeNode.forEach({ (node) in
-            node.hide(showNext: true)
+        
+        guard !activeNode.isEmpty else {
+            return
+        }
+        
+        let frontNodes = activeNode.filter{$0 !== activeNode.last!}
+        
+        frontNodes.forEach({ (node) in
+            node.makeHidden(type:type , showNext: false)
         })
-
+        
+        guard let last = activeNode.last else {
+            return
+        }
+        last.makeHidden(type: type, showNext: true)
     }
     
     

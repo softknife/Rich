@@ -24,7 +24,7 @@ extension UIColor {
     }
     
 
-    convenience init(type:Color) {
+    convenience init(_ type:Color) {
         
         let value = type.value()
         self.init(red: value.0, green: value.1, blue: value.2, alpha: value.3)
@@ -87,6 +87,11 @@ public enum State:Equatable{
     }
 }
 
+
+public enum Hidden {
+    case removeIfActive
+    case removeDirectly
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////

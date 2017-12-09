@@ -22,12 +22,11 @@ public final class Sheet:Skeleton{
     public var background : Background
     public var animation:Animation = .fadedIn
     
-    var content:Content
+    var content:Content = .delay
 
 
-    required public init(content:Content, container:UIView){
+    required public init(container:UIView){
 
-        self.content = content.defaultConfiguration()
         self.containerView = container
 
         let customLayout:Background.InitialLayout  =
@@ -39,7 +38,7 @@ public final class Sheet:Skeleton{
                 layout.height = YGValue(container.frame.size.height)
             })
 
-        self.background = Background(color: UIColor(type:.transparentGray), layout: customLayout)
+        self.background = Background(color: UIColor(.transparentGray), layout: customLayout)
 
     }
 }
@@ -142,8 +141,13 @@ extension Sheet {
 }
 
 extension Sheet.Content {
+    
+    
+    /// in this method , we will give some default properties value to the content of Sheet Node
+    ///
+    /// - Returns: Content
     @discardableResult
-    public func defaultConfiguration() ->Sheet.Content{
+    public func defaultAppearance() ->Sheet.Content{
         
         switch type {
         case let .system(items, others):
@@ -184,23 +188,50 @@ extension Sheet.Content {
 /////////////////////////////////////////////////////////////////////////////////////
 extension  Sheet {
     
+    
+    /// This method help you show up one actionSheet
+    ///
+    /// - Parameters:
+    ///   - container: we will put the new actionSheet on the container you provided
+    ///   - configure: in this configure block , you can custom three main feature :
+    ///       1. animation:  animation style .
+    ///       2. background: include backgroundcolor or whole background, even yogalayout.
+    ///       3. content:  the content appearance and something that will show.
+    /// - Returns: the created new actionsheet
     @discardableResult
-    public static func show(_ content:Sheet.Content, inView container:UIView ,configure: ((Sheet)->())?  = nil)->Sheet{
-        let sheet =  Sheet(content:content,container:container)
+    public static func show(on container:UIView ,configure: ((Sheet)->())?  = nil)->Sheet{
+        let sheet =  Sheet(container:container)
         if let config = configure{config(sheet)}
         sheet.prepare()
         return sheet
     }
 
+    
+    /// instance method to call hide and remove
     public func hide() {
-        hide(showNext: true)
+        makeHidden()
     }
     
-    public static func hide(){
+    /// class method to call hide and remove
+    public static func hide(type:Hidden = .removeDirectly){
         
-        let activeNode = Rich.activeNode()
-        activeNode?.hide(showNext: true)
+        let activeNode = Rich.getNodes(type: .sheet)
+
+        guard !activeNode.isEmpty else {
+            return
+        }
         
+        let frontNodes = activeNode.filter{$0 !== activeNode.last!}
+        
+        frontNodes.forEach({ (node) in
+            node.makeHidden(type:type , showNext: false)
+        })
+        
+        guard let last = activeNode.last else {
+            return
+        }
+        last.makeHidden(type: type, showNext: true)
+
     }
 }
 

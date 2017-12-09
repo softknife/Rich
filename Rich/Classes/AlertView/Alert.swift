@@ -22,17 +22,14 @@ public final class Alert:Skeleton{
     public var background : Background
     public var animation:Animation = .fadedIn
     
-    var content:Content
+    var content:Content = .delay
     
     
-    required public init(content:Content, container:UIView){
+    required public init(container:UIView){
         
-        self.content = content.defaultConfiguration()
-
         self.containerView = container
         
-        
-        self.background = Background(color: UIColor(type:.transparentGray), layout: .default(container))
+        self.background = Background(color: UIColor(.transparentGray), layout: .default(container))
         
         
 
@@ -123,8 +120,12 @@ extension Alert {
 }
 
 extension Alert.Content {
+    
+    /// in this method , we will give some default properties value to the content of Alert Node
+    ///
+    /// - Returns: Content
     @discardableResult
-    public func defaultConfiguration() ->Alert.Content{
+    public func defaultAppearance() ->Alert.Content{
         
         switch type {
         case let .default(title, subTitle, operations):
@@ -174,23 +175,49 @@ extension Alert.Content {
 /////////////////////////////////////////////////////////////////////////////////////
 extension Alert {
  
+    /// This method help you show up one AlertView
+    ///
+    /// - Parameters:
+    ///   - container: we will put the new alertView on the container you provided
+    ///   - configure: in this configure block , you can custom three main feature :
+    ///       1. animation:  animation style .
+    ///       2. background: include backgroundcolor or whole background, even yogalayout.
+    ///       3. content:  the content appearance and something that will show.
+    /// - Returns: the created new alertView
     @discardableResult
-    public static func show(_ content:Alert.Content, inView container:UIView ,configure: ((Alert)->())?  = nil)->Alert{
-        let alert =  Alert(content:content,container:container)
+    public static func show(on container:UIView ,configure: ((Alert)->())?  = nil)->Alert{
+        let alert =  Alert(container:container)
         if let config = configure {config(alert)}
         alert.prepare()
         return alert
     }
     
+    
+    /// instance method to call hide and remove
     public func hide() {
-        hide(showNext: true)
+        makeHidden()
     }
     
-    public static func hide(){
+    /// class method to call hide and remove
+    public static func hide(type:Hidden = .removeDirectly){
         
-        let activeNode = Rich.activeNode()
-        activeNode?.hide(showNext: true)
+        let activeNode = Rich.getNodes(type: .alert)
+
+        guard !activeNode.isEmpty else {
+            return
+        }
         
+        let frontNodes = activeNode.filter{$0 !== activeNode.last!}
+        
+        frontNodes.forEach({ (node) in
+            node.makeHidden(type:type , showNext: false)
+        })
+        
+        guard let last = activeNode.last else {
+            return
+        }
+        last.makeHidden(type: type, showNext: true)
+
     }
 
 
