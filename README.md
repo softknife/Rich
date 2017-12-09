@@ -1,5 +1,4 @@
 # Rich
-## How to use a objective-c dependency????😶
 
 [![CI Status](http://img.shields.io/travis/hjphfut@163.com/Rich.svg?style=flat)](https://travis-ci.org/hjphfut@163.com/Rich)
 [![Version](https://img.shields.io/cocoapods/v/Rich.svg?style=flat)](http://cocoapods.org/pods/Rich)

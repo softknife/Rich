@@ -30,7 +30,7 @@ This project attempts to test the concept of protocol-oriented programming by co
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'Rich/Classes/**/*'
+s.source_files = '{Rich/Classes,External}/**/*.{swift,h,m,c}'
   
   s.resource_bundles = {
    'Rich' => ['Rich/Assets/*.png']

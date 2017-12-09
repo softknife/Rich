@@ -18,7 +18,7 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "Rich/Classes/**/*",
+  "source_files": "{Rich/Classes,External}/**/*.{swift,h,m,c}",
   "resource_bundles": {
     "Rich": [
       "Rich/Assets/*.png"
