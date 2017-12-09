@@ -1,3 +1,6 @@
+
+![logo](https://github.com/EricYellow/PopularSite/blob/master/logo.png)
+
 # Rich
 
 [![CI Status](http://img.shields.io/travis/hjphfut@163.com/Rich.svg?style=flat)](https://travis-ci.org/hjphfut@163.com/Rich)
