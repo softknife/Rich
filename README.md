@@ -22,7 +22,7 @@ pod 'Rich'
 
 ## Author
 
-hjphfut@163.com, hjphfut@163.com
+hjphfut@163.com
 
 ## License
 

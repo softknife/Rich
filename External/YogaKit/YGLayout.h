@@ -8,9 +8,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <yoga/YGEnums.h>
-#import <yoga/Yoga.h>
-#import <yoga/YGMacros.h>
+#import "YGEnums.h"
+#import "Yoga.h"
+#import "YGMacros.h"
 
 YG_EXTERN_C_BEGIN
 

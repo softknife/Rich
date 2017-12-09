@@ -30,7 +30,7 @@ This project attempts to test the concept of protocol-oriented programming by co
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'Rich/Classes/**/*'
+s.source_files = '{Rich/Classes,External}/**/*.{swift,h,m,c}'
   
   s.resource_bundles = {
    'Rich' => ['Rich/Assets/*.png']
@@ -38,5 +38,5 @@ This project attempts to test the concept of protocol-oriented programming by co
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+ # s.dependency 'YogaKit ', '~> 1.6.0'
 end

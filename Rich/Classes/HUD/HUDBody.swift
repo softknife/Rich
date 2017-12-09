@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import YogaKit
+// import YogaKit
 
 class HUDBody: UIView , BodyVisualEffectConfigure{
     
@@ -71,8 +71,9 @@ extension HUDBody:YGLayoutDefaultConfiguration {
         
             configTitle(title)
             
-        case let .progress(progress):
+        case  .progress(let progress):
             
+
             let progressView = ProgressView(content:progress)
             contentView.addSubview(progressView)
             progressView.configureLayout(block: { (layout) in

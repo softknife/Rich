@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import YogaKit
+// import YogaKit
 
 public final class HUD:Skeleton{
     
@@ -186,7 +186,7 @@ extension HUD.Content {
             image?.margin = UIEdgeInsets(top:10)
             name?.margin = UIEdgeInsets(vertical:5)
 
-        case .progress(let progress): break
+        case .progress: break
         case .delay: break
 
          
