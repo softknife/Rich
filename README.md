@@ -13,7 +13,8 @@
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 It is show time:
-![demo](./Dec-09-2017 22-49-08.gif)
+
+![](demo.gif)
 
 
 
