@@ -71,8 +71,9 @@ extension HUDBody:YGLayoutDefaultConfiguration {
         
             configTitle(title)
             
-        case let .progress(progress):
+        case  .progress(_):
             
+
             let progressView = ProgressView(content:progress)
             contentView.addSubview(progressView)
             progressView.configureLayout(block: { (layout) in
